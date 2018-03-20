@@ -9,9 +9,13 @@ import javax.ws.rs.Produces;
  *
  * @author Khurrram Saeed Malik
  */
-@Path("user")
+@Path("{user}")
 public class User {
-
+    
+    @GET
+    public String getUserName (@PathParam("user") String user) {
+        return "Hello, " + user;
+    }
     /**
      * Retrieves representation of an instance of User
      * @param first
