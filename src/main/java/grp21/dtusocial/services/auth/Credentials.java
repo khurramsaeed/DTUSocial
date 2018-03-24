@@ -1,6 +1,8 @@
-package grp21.dtusocial.auth;
+package grp21.dtusocial.services.auth;
 
-public class Credentials {
+import java.io.Serializable;
+
+public class Credentials implements Serializable {
     private String username;
     private String password;
 
