@@ -63,7 +63,7 @@ public class LoginRestService {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMessage() {
+    public Response getRequest() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Writer writer = new BufferedWriter(new OutputStreamWriter(baos));
         final javax.json.stream.JsonGenerator gen = Json.createGenerator(writer);
