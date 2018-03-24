@@ -6,6 +6,7 @@ import brugerautorisation.transport.rmi.BrugeradminHolder;
 import com.google.gson.Gson;
 import grp21.dtusocial.services.auth.AuthenticationFilter;
 import grp21.dtusocial.services.auth.Credentials;
+import grp21.dtusocial.services.auth.Secured;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,6 +24,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
@@ -31,6 +33,7 @@ import javax.ws.rs.core.StreamingOutput;
  *
  * @author Khurram Saeed Malik
  */
+@Secured
 @Path("login")
 public class LoginRestService {
     @POST
@@ -51,7 +54,7 @@ public class LoginRestService {
 //            // Return the token on the response
 //            System.err.println("Reached here!");
             
-            return Response.ok(token).header("Authorization", "Bearer " + token).build();
+            return Response.ok(token).header(AUTHORIZATION, "Bearer " + token).build();
 
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();

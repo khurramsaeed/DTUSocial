@@ -23,7 +23,8 @@ public class UserDataService {
         return "Added user with name " + user.getName() + " and id " + newId;
     }
 
-    public List<User> getUsers() {  
+    public List<User> getUsers() {
+        instance.addUser(new User("Khurram Saeed Malik", "secure", "mk_malik@live.com"));
         return usersList;
     }
 
