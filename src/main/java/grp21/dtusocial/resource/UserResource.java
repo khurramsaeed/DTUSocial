@@ -2,6 +2,7 @@ package grp21.dtusocial.resource;
 
 import com.google.gson.Gson;
 import grp21.dtusocial.model.User;
+import grp21.dtusocial.resource.auth.Secured;
 import grp21.dtusocial.service.UserDataService;
 
 import javax.ws.rs.*;
@@ -29,13 +30,14 @@ public class UserResource {
         String json = new Gson().toJson(userDataService.getUsers());
         return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
     }
-
+    
     /**
      * Find user by id
      * @param id
      * @return User
      */
     @GET
+    @Secured
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("id") String id) {
@@ -66,6 +68,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> getUserss() {
         return userDataService.getUsers();
-    }*/
-    
+    }
+    */
 }

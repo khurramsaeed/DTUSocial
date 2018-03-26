@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.security.Key;
 import java.util.Date;
 import javax.annotation.Priority;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -21,7 +22,6 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
-    private static final String REALM = "example";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
     final public static Key generatedKey = MacProvider.generateKey();
 
@@ -33,9 +33,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         // Validate the Authorization header
-        if (!isTokenBasedAuthentication(authorizationHeader)) {
-            abortWithUnauthorized(requestContext);
-            return;
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            throw new NotAuthorizedException("Authorization header must be provided");
         }
 
         // Extract the token from the Authorization header
@@ -47,28 +46,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             validateToken(token);
 
         } catch (Exception e) {
-            abortWithUnauthorized(requestContext);
+            requestContext.abortWith( Response.status(Response.Status.UNAUTHORIZED).build());
         }
-    }
-
-    private boolean isTokenBasedAuthentication(String authorizationHeader) {
-
-        // Check if the Authorization header is valid
-        // It must not be null and must be prefixed with "Bearer" plus a whitespace
-        // The authentication scheme comparison must be case-insensitive
-        return authorizationHeader != null && authorizationHeader.toLowerCase()
-                .startsWith(AUTHENTICATION_SCHEME.toLowerCase() + " ");
-    }
-
-    private void abortWithUnauthorized(ContainerRequestContext requestContext) {
-
-        // Abort the filter chain with a 401 status code response
-        // The WWW-Authenticate header is sent along with the response
-        requestContext.abortWith(
-                Response.status(Response.Status.UNAUTHORIZED)
-                        .header(HttpHeaders.WWW_AUTHENTICATE,
-                                AUTHENTICATION_SCHEME + " realm=\"" + REALM + "\"")
-                        .build());
     }
 
     private void validateToken(String token) throws Exception {

@@ -5,7 +5,6 @@ import brugerautorisation.transport.rmi.Brugeradmin;
 import brugerautorisation.transport.rmi.BrugeradminHolder;
 import grp21.dtusocial.resource.auth.AuthenticationFilter;
 import grp21.dtusocial.model.Credentials;
-import grp21.dtusocial.resource.auth.Secured;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,7 +22,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
@@ -44,7 +42,7 @@ public class LoginResource {
             String password = credentials.getPassword();
 
             // Authenticate the user using the credentials provided
-            //authenticate(username, password);
+            authenticate(username, password);
             
             String token = issueToken(username);
             
@@ -53,7 +51,7 @@ public class LoginResource {
 //            // Return the token on the response
 //            System.err.println("Reached here!");
             
-            return Response.ok(token).header(AUTHORIZATION, "Bearer " + token).build();
+            return Response.ok(token).header("Authorization", "Bearer " + token).build();
 
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -88,21 +86,21 @@ public class LoginResource {
      * @return
      * @throws Exception 
      */
-    private Bruger authenticate(String brugernavn, String password) throws Exception {
+    private Bruger authenticate(String username, String password) throws Exception {
         Brugeradmin ba = BrugeradminHolder.getBrugerAdmin();
         // returns email if success
-        return ba.hentBruger(brugernavn, password);
+        return ba.hentBruger(username, password);
     }
     
-    private String issueToken(String brugernavn) {
+    private String issueToken(String username) {
         List<String> roller = null;
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-        long ttlMillis = 3600000L+3600000L; // to timer
+        long ttlMillis = 3600000L; // to timer
         
         JwtBuilder builder =  Jwts.builder()
                 .setIssuer("DTUSocial")
-                .claim("brugernavn", brugernavn)
+                .claim("username", username)
                 .signWith(SignatureAlgorithm.HS512, AuthenticationFilter.generatedKey);
 
         if (ttlMillis >= 0) {
