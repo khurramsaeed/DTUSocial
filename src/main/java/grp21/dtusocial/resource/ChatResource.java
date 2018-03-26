@@ -1,6 +1,5 @@
-package grp21.dtusocial.services;
+package grp21.dtusocial.resource;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,11 +21,11 @@ import javax.ws.rs.core.StreamingOutput;
  * @author Khurram Saeed Malik
  */
 @Path("chat")
-public class Chat {
+public class ChatResource {
     // Generating JSON data in methods below
    
     @GET
-    @Path("/2")
+    @Path("2")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct2() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -48,7 +47,7 @@ public class Chat {
         return Response.ok(stream).type(MediaType.APPLICATION_JSON).build();
     } 
     @GET
-    @Path("/3")
+    @Path("3")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct3() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -1,4 +1,4 @@
-package grp21.dtusocial.services.auth;
+package grp21.dtusocial.model;
 
 import java.io.Serializable;
 

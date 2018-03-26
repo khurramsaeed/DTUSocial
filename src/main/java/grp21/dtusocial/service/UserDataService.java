@@ -1,5 +1,6 @@
-package grp21.dtusocial.data;
+package grp21.dtusocial.service;
 
+import grp21.dtusocial.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,6 @@ public class UserDataService {
     }
 
     public List<User> getUsers() {
-        instance.addUser(new User("Khurram Saeed Malik", "secure", "mk_malik@live.com"));
         return usersList;
     }
 

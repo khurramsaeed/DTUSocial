@@ -1,4 +1,4 @@
-package grp21.dtusocial.services.auth;
+package grp21.dtusocial.resource.auth;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.crypto.MacProvider;

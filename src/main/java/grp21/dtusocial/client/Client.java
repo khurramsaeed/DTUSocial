@@ -1,6 +1,6 @@
 package grp21.dtusocial.client;
 
-import grp21.dtusocial.services.auth.Credentials;
+import grp21.dtusocial.model.Credentials;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;

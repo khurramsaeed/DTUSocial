@@ -1,4 +1,4 @@
-package grp21.dtusocial.data;
+package grp21.dtusocial.model;
 
 /**
  *

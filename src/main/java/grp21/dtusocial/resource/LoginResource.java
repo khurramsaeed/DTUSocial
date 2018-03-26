@@ -1,12 +1,11 @@
-package grp21.dtusocial.services;
+package grp21.dtusocial.resource;
 
 import brugerautorisation.data.Bruger;
 import brugerautorisation.transport.rmi.Brugeradmin;
 import brugerautorisation.transport.rmi.BrugeradminHolder;
-import com.google.gson.Gson;
-import grp21.dtusocial.services.auth.AuthenticationFilter;
-import grp21.dtusocial.services.auth.Credentials;
-import grp21.dtusocial.services.auth.Secured;
+import grp21.dtusocial.resource.auth.AuthenticationFilter;
+import grp21.dtusocial.model.Credentials;
+import grp21.dtusocial.resource.auth.Secured;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -33,9 +32,9 @@ import javax.ws.rs.core.StreamingOutput;
  *
  * @author Khurram Saeed Malik
  */
-@Secured
+
 @Path("login")
-public class LoginRestService {
+public class LoginResource {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -45,7 +44,7 @@ public class LoginRestService {
             String password = credentials.getPassword();
 
             // Authenticate the user using the credentials provided
-            authenticate(username, password);
+            //authenticate(username, password);
             
             String token = issueToken(username);
             

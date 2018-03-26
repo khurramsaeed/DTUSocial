@@ -1,8 +1,8 @@
-package grp21.dtusocial.services;
+package grp21.dtusocial.resource;
 
 import com.google.gson.Gson;
-import grp21.dtusocial.data.User;
-import grp21.dtusocial.data.UserDataService;
+import grp21.dtusocial.model.User;
+import grp21.dtusocial.service.UserDataService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
  * @author Khurrram Saeed Malik
  */
 @Path("users")
-public class UserRestService {
+public class UserResource {
     private final UserDataService userDataService = UserDataService.getInstance();
     
     /**
@@ -22,6 +22,7 @@ public class UserRestService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
+        userDataService.addUser(new User("Jhon Doe", "secure", "johndoe@a.co"));
         if (userDataService.getUsers().isEmpty()) {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
@@ -59,5 +60,12 @@ public class UserRestService {
 //    public String addUser(User newUser) {
 //        return dataService.addUser(newUser);
 //    }
+    
+   /* Why does this implementation doesn't work?
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> getUserss() {
+        return userDataService.getUsers();
+    }*/
     
 }
