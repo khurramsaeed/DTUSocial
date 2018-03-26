@@ -9,4 +9,16 @@ import javax.ws.rs.core.Application;
  */
 @ApplicationPath("/")
 public class DTUSocialApp extends Application {
+ /*   @Override
+    public Set<Class<?>> getClasses() {
+    HashSet set = new HashSet<Class<?>>();
+    set.add(ChatResource.class);
+    set.add(LoginResource.class);
+    set.add(UserResource.class);
+    
+    set.add(UserDataService.class);
+    set.add(Credentials.class);
+    set.add(User.class);
+    return set;
+}*/
 }

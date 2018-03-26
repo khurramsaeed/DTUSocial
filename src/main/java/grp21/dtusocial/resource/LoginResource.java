@@ -31,7 +31,7 @@ import javax.ws.rs.core.StreamingOutput;
  * @author Khurram Saeed Malik
  */
 
-@Path("login")
+@Path("/login")
 public class LoginResource {
     @POST
     @Produces(MediaType.TEXT_PLAIN)

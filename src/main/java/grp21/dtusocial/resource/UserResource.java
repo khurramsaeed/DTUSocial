@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import grp21.dtusocial.model.User;
 import grp21.dtusocial.resource.auth.Secured;
 import grp21.dtusocial.service.UserDataService;
+import java.util.List;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -22,13 +23,9 @@ public class UserResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsers() {
-        userDataService.addUser(new User("Jhon Doe", "secure", "johndoe@a.co"));
-        if (userDataService.getUsers().isEmpty()) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
-        String json = new Gson().toJson(userDataService.getUsers());
-        return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
+    public List<User> getUsers() {
+        userDataService.addUser(new User("Khurram Doe", "secure", "johndoe@a.co"));
+        return userDataService.getUsers();
     }
     
     /**
@@ -62,12 +59,17 @@ public class UserResource {
 //    public String addUser(User newUser) {
 //        return dataService.addUser(newUser);
 //    }
-    
-   /* Why does this implementation doesn't work?
-    @GET
+    /*@GET DEPRECETAD: JSON is converted with 'jersey-moxy' dependency
     @Produces(MediaType.APPLICATION_JSON)
-    public List<User> getUserss() {
-        return userDataService.getUsers();
+    public Response getUsers() {
+        userDataService.addUser(new User("Jhon Doe", "secure", "johndoe@a.co"));
+        if (userDataService.getUsers().isEmpty()) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+        String json = new Gson().toJson(userDataService.getUsers());
+        return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
     }
     */
+    
+    
 }
