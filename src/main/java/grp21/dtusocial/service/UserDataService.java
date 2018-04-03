@@ -1,6 +1,6 @@
 package grp21.dtusocial.service;
 
-import grp21.dtusocial.model.User;
+import brugerautorisation.data.Bruger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,28 +9,30 @@ import java.util.List;
  * @author Khurram Saeed Malik
  */
 public class UserDataService {
-    private List<User> usersList = new ArrayList<>();
+    private List<Bruger> usersList = new ArrayList<>();
 
     private static UserDataService instance = new UserDataService();
+    
+    
 
     public static UserDataService getInstance() {
         return instance;
     }
 
-    public String addUser(User user) {
-        String newId = Integer.toString(usersList.size() + 1);
-        user.setId(newId);
+    public String addUser(Bruger user) {
         usersList.add(user);
-        return "Added user with name " + user.getName() + " and id " + newId;
+        return "Added user: " + user.fornavn;  
     }
 
-    public List<User> getUsers() {
+    public List<Bruger> getUsers() {
         return usersList;
     }
 
-    public User getUserById(String id) {
-        for (User user : usersList) {
-            if (user.getId().equals(id)) {
+    public Bruger getUserById(String studyNr) {
+        if (usersList.isEmpty()) return null;
+        
+        for (Bruger user : usersList) {
+            if (user.brugernavn.equals(studyNr)) {
                 return user;
             }
         }

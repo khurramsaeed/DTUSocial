@@ -1,7 +1,7 @@
 package grp21.dtusocial.resource;
 
+import brugerautorisation.data.Bruger;
 import com.google.gson.Gson;
-import grp21.dtusocial.model.User;
 import grp21.dtusocial.resource.auth.Secured;
 import grp21.dtusocial.service.UserDataService;
 import java.util.List;
@@ -23,8 +23,7 @@ public class UserResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<User> getUsers() {
-        userDataService.addUser(new User("Khurram Doe", "secure", "johndoe@a.co"));
+    public List<Bruger> getUsers() {
         return userDataService.getUsers();
     }
     
@@ -34,16 +33,15 @@ public class UserResource {
      * @return User
      */
     @GET
-    @Secured
-    @Path("{id}")
+    @Path("{studyNr}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("id") String id) {
-        if (userDataService.getUserById(id) == null) {
+    public Response getUser(@PathParam("studyNr") String studyNr) {
+        if (userDataService.getUserById(studyNr) == null) {
             // HTTP 404 error code
             // If User doesn't exists
            return Response.status(Response.Status.NOT_FOUND).build();  
         }
-         User user = userDataService.getUserById(id);
+         Bruger user = userDataService.getUserById(studyNr);
          String json = new Gson().toJson(user);
          return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
     }

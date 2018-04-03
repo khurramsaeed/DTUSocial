@@ -4,6 +4,7 @@ import java.io.IOException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.ext.Provider;
 
 /**
  *
@@ -13,9 +14,10 @@ import javax.ws.rs.container.ContainerResponseFilter;
  * 2. XMLHttpRequest cannot load http://localhost:8080/DTUSocial/login. Origin http://localhost:4200 is not allowed by Access-Control-Allow-Origin
  * 
  * What problems can this implementation have?
- * This extra http headers might open some security leaks
+ * These extra http headers might open some security leaks
  * See more here: https://stackoverflow.com/questions/23450494/how-to-enable-cross-domain-requests-on-jax-rs-web-services
  */
+@Provider
 public class CustomResponseFilter implements ContainerResponseFilter {
 
     @Override
@@ -24,11 +26,7 @@ public class CustomResponseFilter implements ContainerResponseFilter {
         if (origin != null) {
             responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
         }
-        
         responseContext.getHeaders().add("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
-        responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
-        responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-        responseContext.getHeaders().add("Access-Control-Max-Age", "1209600");
 		
     }
     

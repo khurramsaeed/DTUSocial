@@ -5,6 +5,7 @@ import brugerautorisation.transport.rmi.Brugeradmin;
 import brugerautorisation.transport.rmi.BrugeradminHolder;
 import grp21.dtusocial.resource.auth.AuthenticationFilter;
 import grp21.dtusocial.model.Credentials;
+import grp21.dtusocial.service.UserDataService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -33,6 +34,7 @@ import javax.ws.rs.core.StreamingOutput;
 
 @Path("/login")
 public class LoginResource {
+    private final UserDataService userDataService = UserDataService.getInstance();
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -42,7 +44,7 @@ public class LoginResource {
             String password = credentials.getPassword();
 
             // Authenticate the user using the credentials provided
-            authenticate(username, password);
+            Bruger user = authenticate(username, password);
             
             String token = issueToken(username);
             
@@ -50,7 +52,11 @@ public class LoginResource {
 //            System.out.println(json);
 //            // Return the token on the response
 //            System.err.println("Reached here!");
-            
+
+            if(userDataService.getUserById(user.brugernavn) == null) {
+                userDataService.addUser(user);
+            }
+                        
             return Response.ok(token).header("Authorization", "Bearer " + token).build();
 
         } catch (Exception e) {
