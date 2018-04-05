@@ -3,6 +3,9 @@ package grp21.dtusocial.resource;
 import brugerautorisation.data.Bruger;
 import brugerautorisation.transport.rmi.Brugeradmin;
 import brugerautorisation.transport.rmi.BrugeradminHolder;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import grp21.dtusocial.resource.auth.AuthenticationFilter;
 import grp21.dtusocial.model.Credentials;
 import grp21.dtusocial.service.UserDataService;
@@ -28,6 +31,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import java.io.FileInputStream;
 
 /**
  *
@@ -60,11 +64,23 @@ public class LoginResource {
             if(userDataService.getUserById(user.brugernavn) == null) {
                 userDataService.addUser(user);
                 
-                String url = "https://dtusocial-mank.firebaseio.com/users.json";
-                final FirebaseDatabase databasereference  = FirebaseDatabase.getInstance();  
+                FileInputStream serviceAccount =
+  new FileInputStream("../firebase_key.json");
+
+FirebaseOptions options = new FirebaseOptions.Builder()
+  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+  .setDatabaseUrl("https://dtusocial-mank.firebaseio.com")
+  .build();
+
+FirebaseApp.initializeApp(options);
+                
+                String url = "https://dtusocial-mank.firebaseio.com/";
+                FirebaseDatabase databasereference = FirebaseDatabase.getInstance();  
                 DatabaseReference ref = databasereference.getReference(url);
-                DatabaseReference userRef = ref.child("/users");
+                DatabaseReference userRef = ref.child("users");
                 userRef.setValueAsync(user);
+                
+                
             }
                         
             return Response.ok(token).header("Authorization", "Bearer " + token).build();
