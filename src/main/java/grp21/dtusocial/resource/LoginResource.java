@@ -26,6 +26,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  *
@@ -34,6 +36,8 @@ import javax.ws.rs.core.StreamingOutput;
 
 @Path("/login")
 public class LoginResource {
+    
+   
     private final UserDataService userDataService = UserDataService.getInstance();
     @POST
     @Produces(MediaType.TEXT_PLAIN)
@@ -55,6 +59,12 @@ public class LoginResource {
 
             if(userDataService.getUserById(user.brugernavn) == null) {
                 userDataService.addUser(user);
+                
+                String url = "https://dtusocial-mank.firebaseio.com/users.json";
+                final FirebaseDatabase databasereference  = FirebaseDatabase.getInstance();  
+                DatabaseReference ref = databasereference.getReference(url);
+                //DatabaseReference userRef = ref.child("users");
+                ref.setValueAsync(user.brugernavn);
             }
                         
             return Response.ok(token).header("Authorization", "Bearer " + token).build();
