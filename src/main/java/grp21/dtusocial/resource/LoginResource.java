@@ -63,8 +63,8 @@ public class LoginResource {
                 String url = "https://dtusocial-mank.firebaseio.com/users.json";
                 final FirebaseDatabase databasereference  = FirebaseDatabase.getInstance();  
                 DatabaseReference ref = databasereference.getReference(url);
-                //DatabaseReference userRef = ref.child("users");
-                ref.setValueAsync(user.brugernavn);
+                DatabaseReference userRef = ref.child("/users");
+                userRef.setValueAsync(user);
             }
                         
             return Response.ok(token).header("Authorization", "Bearer " + token).build();
