@@ -3,11 +3,8 @@ package grp21.dtusocial.resource;
 import brugerautorisation.data.Bruger;
 import brugerautorisation.transport.rmi.Brugeradmin;
 import brugerautorisation.transport.rmi.BrugeradminHolder;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import grp21.dtusocial.resource.auth.AuthenticationFilter;
 import grp21.dtusocial.model.Credentials;
+import grp21.dtusocial.resource.filters.SecurityFilter;
 import grp21.dtusocial.service.UserDataService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -29,20 +26,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import java.io.FileInputStream;
 
 /**
  *
  * @author Khurram Saeed Malik
  */
 
-@Path("/login")
+@Path("login")
 public class LoginResource {
     
-   
     private final UserDataService userDataService = UserDataService.getInstance();
+    
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -54,35 +48,12 @@ public class LoginResource {
             // Authenticate the user using the credentials provided
             Bruger user = authenticate(username, password);
             
+            // Issue a token to client
             String token = issueToken(username);
-            
-//            String json = new Gson().toJson(user);
-//            System.out.println(json);
-//            // Return the token on the response
-//            System.err.println("Reached here!");
-
+            // Add user to userDataService
             if(userDataService.getUserById(user.brugernavn) == null) {
-                userDataService.addUser(user);
-                
-                FileInputStream serviceAccount =
-  new FileInputStream("../firebase_key.json");
-
-FirebaseOptions options = new FirebaseOptions.Builder()
-  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-  .setDatabaseUrl("https://dtusocial-mank.firebaseio.com")
-  .build();
-
-FirebaseApp.initializeApp(options);
-                
-                String url = "https://dtusocial-mank.firebaseio.com/";
-                FirebaseDatabase databasereference = FirebaseDatabase.getInstance();  
-                DatabaseReference ref = databasereference.getReference(url);
-                DatabaseReference userRef = ref.child("users");
-                userRef.setValueAsync(user);
-                
-                
-            }
-                        
+                userDataService.addUser(user);                
+            }           
             return Response.ok(token).header("Authorization", "Bearer " + token).build();
 
         } catch (Exception e) {
@@ -98,7 +69,6 @@ FirebaseApp.initializeApp(options);
         final javax.json.stream.JsonGenerator gen = Json.createGenerator(writer);
         gen.writeStartObject()
                 .write("message", "Requested URL doesn't exist")
-                .write("info_url", "skriv url her")
                 .writeEnd();
         gen.close();
         StreamingOutput stream = new StreamingOutput() {
@@ -124,6 +94,11 @@ FirebaseApp.initializeApp(options);
         return ba.hentBruger(username, password);
     }
     
+    /**
+     * Issue token if user is successfully authenticated
+     * @param username
+     * @return 
+     */
     private String issueToken(String username) {
         List<String> roller = null;
         long nowMillis = System.currentTimeMillis();
@@ -133,7 +108,7 @@ FirebaseApp.initializeApp(options);
         JwtBuilder builder =  Jwts.builder()
                 .setIssuer("DTUSocial")
                 .claim("username", username)
-                .signWith(SignatureAlgorithm.HS512, AuthenticationFilter.generatedKey);
+                .signWith(SignatureAlgorithm.HS512, SecurityFilter.generatedKey);
 
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;

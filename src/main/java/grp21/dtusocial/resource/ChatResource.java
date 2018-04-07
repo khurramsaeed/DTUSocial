@@ -1,5 +1,6 @@
 package grp21.dtusocial.resource;
 
+import grp21.dtusocial.model.Secured;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class ChatResource {
     // Generating JSON data in methods below
    
     @GET
+    @Secured
     @Path("2")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct2() {

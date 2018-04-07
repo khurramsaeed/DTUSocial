@@ -1,5 +1,6 @@
-package grp21.dtusocial.resource.auth;
+package grp21.dtusocial.resource.filters;
 
+import grp21.dtusocial.model.Secured;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import java.io.IOException;
@@ -21,53 +22,64 @@ import javax.ws.rs.ext.Provider;
 @Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class AuthenticationFilter implements ContainerRequestFilter {
+public class SecurityFilter implements ContainerRequestFilter {
     private static final String AUTHENTICATION_SCHEME = "Bearer";
     final public static Key generatedKey = MacProvider.generateKey();
 
+    /**
+     * Purpose of this filter is to authenticate to client to get acccess to
+     * secured resources. This is based on jason web tokens (JWTs).
+     * @param requestContext
+     * @throws IOException 
+     */
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-
-        // Get the Authorization header from the request
-        String authorizationHeader
-                = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        // Retrieve authorization header from request
+        String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         // Validate the Authorization header
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            throw new NotAuthorizedException("Authorization header must be provided");
+            throw new NotAuthorizedException("The requested resource is secured, you must provide authorization header to access it.");
         }
-
-        // Extract the token from the Authorization header
-        String token = authorizationHeader
-                .substring(AUTHENTICATION_SCHEME.length()).trim();
-
+        
+        String token = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
+       
         try {
             // Validate the token
-            validateToken(token);
+            validate(token);
 
         } catch (Exception e) {
             requestContext.abortWith( Response.status(Response.Status.UNAUTHORIZED).build());
         }
     }
 
-    private void validateToken(String token) throws Exception {
+    /**
+     * Validates the provided authToken
+     * @param token
+     * @throws Exception 
+     */
+    private void validate(String token) throws Exception {
         try {
-            Date exp = Jwts.parser().setSigningKey(generatedKey).parseClaimsJws(token).getBody().getExpiration();
-            long expmillis = exp.getTime();
+            Date expiration = Jwts.parser().setSigningKey(generatedKey).parseClaimsJws(token).getBody().getExpiration();
+            long expmillis = expiration.getTime();
             isTokenExpired(expmillis);
-            // vi kan GODT stole på denne her token
 
         } catch (Exception e) {
-            // Vi kan IKKE stole på denne her token
-            throw new Exception("Token is not authorized");
+            // Token couldn't be authorized
+            throw new Exception("Token couldn't be authorized");
         }
     }
 
+    /**
+     * Checks for expiration of token
+     * @param expmillis
+     * @throws Exception 
+     */
     private void isTokenExpired(long expmillis) throws Exception {
         long nowMillis = System.currentTimeMillis();
 
         if (nowMillis > expmillis) {
-            throw new Exception("Token er expired");
+            throw new Exception("Provided token has expired.");
         }
     }
 }

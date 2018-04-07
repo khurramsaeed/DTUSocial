@@ -1,4 +1,4 @@
-package grp21.dtusocial.resource.auth;
+package grp21.dtusocial.model;
 
 import javax.ws.rs.NameBinding;
 import java.lang.annotation.Retention;
