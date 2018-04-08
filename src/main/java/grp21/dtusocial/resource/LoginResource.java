@@ -3,6 +3,7 @@ package grp21.dtusocial.resource;
 import brugerautorisation.data.Bruger;
 import brugerautorisation.transport.rmi.Brugeradmin;
 import brugerautorisation.transport.rmi.BrugeradminHolder;
+import com.google.gson.Gson;
 import grp21.dtusocial.model.Credentials;
 import grp21.dtusocial.resource.filters.SecurityFilter;
 import grp21.dtusocial.service.UserDataService;
@@ -50,11 +51,12 @@ public class LoginResource {
             
             // Issue a token to client
             String token = issueToken(username);
+            String json = new Gson().toJson(token);
             // Add user to userDataService
             if(userDataService.getUserById(user.brugernavn) == null) {
                 userDataService.addUser(user);                
             }           
-            return Response.ok(token).header("Authorization", "Bearer " + token).build();
+            return Response.ok(json).header("Authorization", "Bearer " + token).build();
 
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
