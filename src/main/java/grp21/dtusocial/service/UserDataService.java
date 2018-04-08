@@ -13,8 +13,6 @@ public class UserDataService {
 
     private static UserDataService instance = new UserDataService();
     
-    
-
     public static UserDataService getInstance() {
         return instance;
     }
