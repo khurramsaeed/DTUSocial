@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-shared-configuration>
+    <libraries xmlns="http://www.netbeans.org/ns/cdnjs-libraries/1">
+        <library name="forerunnerdb" version="2.0.22">
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-all.js" path="fdb-all.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-all.min.js" path="fdb-all.min.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-angular.js" path="fdb-angular.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-angular.min.js" path="fdb-angular.min.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-autobind.js" path="fdb-autobind.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-autobind.min.js" path="fdb-autobind.min.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-core.js" path="fdb-core.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-core.min.js" path="fdb-core.min.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-core+persist.js" path="fdb-core+persist.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-core+persist.min.js" path="fdb-core+persist.min.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-core+views.js" path="fdb-core+views.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-core+views.min.js" path="fdb-core+views.min.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-core+views+persist.js" path="fdb-core+views+persist.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-core+views+persist.min.js" path="fdb-core+views+persist.min.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-infinilist.js" path="fdb-infinilist.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-infinilist.min.js" path="fdb-infinilist.min.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-legacy.js" path="fdb-legacy.js"/>
+            <file localPath="src/main/webapp/js/libs/forerunnerdb/fdb-legacy.min.js" path="fdb-legacy.min.js"/>
+        </library>
+    </libraries>
     <properties xmlns="http://www.netbeans.org/ns/maven-properties-data/1">
         <org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_j2eeVersion>1.7-web</org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_j2eeVersion>
         <org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_deploy_2e_server>gfv3ee6</org-netbeans-modules-maven-j2ee.netbeans_2e_hint_2e_deploy_2e_server>
         <org-netbeans-modules-maven-jaxws.rest_2e_config_2e_type>ide</org-netbeans-modules-maven-jaxws.rest_2e_config_2e_type>
+        <org-netbeans-modules-web-clientproject-api.js_2e_libs_2e_folder>js/libs</org-netbeans-modules-web-clientproject-api.js_2e_libs_2e_folder>
     </properties>
 </project-shared-configuration>
