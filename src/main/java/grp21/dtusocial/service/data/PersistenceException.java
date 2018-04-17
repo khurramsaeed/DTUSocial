@@ -1,4 +1,4 @@
-package data.interfaces;
+package grp21.dtusocial.service.data;
 
 /**
  * Created by Christian on 11-05-2017.

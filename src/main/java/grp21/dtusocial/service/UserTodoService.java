@@ -32,17 +32,16 @@ public class UserTodoService {
         return todoList;
     }
 
-    public Todo getTodoByUserId(String userId) {
+    public List<Todo> getTodoByUserId(String userId) {
         if (todoList.isEmpty()) return null;
         
+        List<Todo> userTodoList = new ArrayList();
         for (Todo todo : todoList) {
             if(todo.getUserId().equals(userId)) {
-                return todo;
-            } else { 
+                userTodoList.add(todo);
             }
-        }
-        // null is used for error handling
-        return null;
+            
+        } return userTodoList;
     }
     
     

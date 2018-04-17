@@ -16,19 +16,15 @@ import brugerautorisation.data.Bruger;
 public class Todo {
     private String todoId, message, userId;
     private boolean done;
-    
-    public Todo() {
-        
-    }
-    
     Bruger user;
-
+    
+    public Todo() {}
         
     public Todo (String todoId, String userId, String message, boolean done) {
         this.todoId = todoId;
         this.userId = userId;
         this.message = message;
-        this.done = false;
+        this.done = done;
     } 
     
     public void setTodoId(String todoId){
@@ -42,8 +38,8 @@ public class Todo {
     public String getUserId() {
         return userId;
     }
-    public void setUserId() {
-        this.userId = user.brugernavn;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
     
     public void setMessage(String message){

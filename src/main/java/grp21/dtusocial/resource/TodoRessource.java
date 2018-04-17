@@ -30,13 +30,16 @@ public class TodoRessource {
     @GET 
     public List<Todo> getTodos() {
         return userTodoService.getTodos(); 
-}
+    }
     
     @GET
     @Path("{studyNr}")
     @Produces (MediaType.APPLICATION_JSON)
-    public Todo getUserTodo(@PathParam("studyNr")String userId) {
-        return userTodoService.getTodoByUserId("s165151");
+    public Response getUserTodo(@PathParam("studyNr")String userId) {
+        if (userTodoService.getTodoByUserId(userId) == null) {
+            return Response.ok("Couldn't found any todos for user!").build();
+        }
+        return Response.ok(userTodoService.getTodoByUserId(userId)).build();
     }
     
     @POST

@@ -10,6 +10,7 @@ import grp21.dtusocial.service.UserDataService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import grp21.dtusocial.service.data.*;
+import static grp21.dtusocial.service.data.MorphiaHandler.morphiaHandler;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -57,7 +58,7 @@ public class LoginResource {
             // Add user to userDataService
             if(userDataService.getUserById(user.brugernavn) == null) {
                 userDataService.addUser(user); 
-                
+                morphiaHandler.addUser(user);
             }           
             return Response.ok(json).header("Authorization", "Bearer " + token).build();
 
