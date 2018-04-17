@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 import javax.json.Json;
@@ -38,7 +39,7 @@ import javax.ws.rs.core.StreamingOutput;
 public class LoginResource {
     
     private final UserDataService userDataService = UserDataService.getInstance();
-    
+  
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -56,8 +57,7 @@ public class LoginResource {
             // Add user to userDataService
             if(userDataService.getUserById(user.brugernavn) == null) {
                 userDataService.addUser(user); 
-                MorphiaHandler mh = new MorphiaHandler();
-                mh.addUser(user);
+                
             }           
             return Response.ok(json).header("Authorization", "Bearer " + token).build();
 

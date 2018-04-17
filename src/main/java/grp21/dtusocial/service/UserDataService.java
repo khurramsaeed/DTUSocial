@@ -1,6 +1,7 @@
 package grp21.dtusocial.service;
 
 import brugerautorisation.data.Bruger;
+import static grp21.dtusocial.service.data.MorphiaHandler.morphiaHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class UserDataService {
     }
 
     public String addUser(Bruger user) {
+        // morphiaHandler.addUser(user);
         usersList.add(user);
         return "Added user: " + user.fornavn;  
     }
