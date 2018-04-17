@@ -46,6 +46,7 @@ public class UserResource {
          return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
     }
     
+    
     /**
      * If we want to add new users
      * @param newUser
