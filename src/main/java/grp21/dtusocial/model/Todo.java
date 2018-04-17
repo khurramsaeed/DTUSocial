@@ -5,6 +5,8 @@
  */
 package grp21.dtusocial.model;
 
+import brugerautorisation.data.Bruger;
+
 /**
  *
  * @author Nikolaj
@@ -19,7 +21,7 @@ public class Todo {
         
     }
     
-    User user;
+    Bruger user;
 
         
     public Todo (String todoId, String userId, String message, boolean done) {
@@ -41,7 +43,7 @@ public class Todo {
         return userId;
     }
     public void setUserId() {
-        this.userId = user.getId();
+        this.userId = user.brugernavn;
     }
     
     public void setMessage(String message){
