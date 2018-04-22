@@ -5,6 +5,7 @@
  */
 package grp21.dtusocial.resource;
 
+import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.UserTodoService;
 import grp21.dtusocial.model.Todo;
 import java.util.List;

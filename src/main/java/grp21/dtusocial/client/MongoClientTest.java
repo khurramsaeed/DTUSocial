@@ -12,7 +12,7 @@ import java.net.UnknownHostException;
  * @author Khurram Saeed Malik
  * link: http://www.mkyong.com/mongodb/java-mongodb-hello-world-example/
  * https://docs.mongodb.com/manual/reference/command/
- * http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/connect-to-mongodb/
+ * http://mongodb.github.io/moxngo-java-driver/3.4/driver/tutorials/connect-to-mongodb/
  */
 public class MongoClientTest {
     
@@ -24,7 +24,7 @@ public class MongoClientTest {
     
     public static void main(String[] args) throws UnknownHostException {
         MongoClientURI clientURI = new MongoClientURI(MONGODB_URI);
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        MongoClient mongoClient = new MongoClient(clientURI);
         
         DB db = mongoClient.getDB("testdb");
         // boolean auth = db.authenticate("heroku_j5dc4ld5", "8qspviq97mn4194b5db31t3tr4".toCharArray());

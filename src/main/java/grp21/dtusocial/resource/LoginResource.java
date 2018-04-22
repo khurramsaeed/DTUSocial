@@ -58,7 +58,6 @@ public class LoginResource {
             // Add user to userDataService
             if(userDataService.getUserById(user.brugernavn) == null) {
                 userDataService.addUser(user); 
-                morphiaHandler.addUser(user);
             }           
             return Response.ok(json).header("Authorization", "Bearer " + token).build();
 
