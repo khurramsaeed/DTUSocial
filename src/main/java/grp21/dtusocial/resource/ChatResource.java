@@ -1,20 +1,12 @@
 package grp21.dtusocial.resource;
 
-import brugerautorisation.data.Bruger;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import grp21.dtusocial.model.Message;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.ChatService;
 import grp21.dtusocial.service.JWTService;
-import java.io.Serializable;
-import java.io.StringReader;
-import java.util.Date;
 import java.util.List;
-import javax.json.Json;
-import javax.json.JsonReader;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -33,9 +25,12 @@ public class ChatResource {
     
     private final ChatService chatService = ChatService.getInstance();
     
-    public ChatResource() {}
-    
-    
+    /**
+     * Adds message to ChatService
+     * @param authHeader
+     * @param message
+     * @return 
+     */
     @PUT
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
