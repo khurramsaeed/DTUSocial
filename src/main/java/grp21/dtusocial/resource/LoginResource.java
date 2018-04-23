@@ -9,6 +9,8 @@ import grp21.dtusocial.resource.filters.SecurityFilter;
 import grp21.dtusocial.service.UserDataService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
+import grp21.dtusocial.service.data.*;
+import static grp21.dtusocial.service.data.MorphiaHandler.morphiaHandler;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 import javax.json.Json;
@@ -37,6 +40,11 @@ import javax.ws.rs.core.StreamingOutput;
 public class LoginResource {
     
     private final UserDataService userDataService = UserDataService.getInstance();
+    private final MorphiaHandler morphiaHandler;
+
+    public LoginResource() throws PersistenceException, UnknownHostException {
+        this.morphiaHandler = MorphiaHandler.getInstance();
+    }
   
     @POST
     @Produces(MediaType.TEXT_PLAIN)
@@ -54,8 +62,10 @@ public class LoginResource {
             String json = new Gson().toJson(token);
             // Add user to userDataService
             if(userDataService.getUserById(user.brugernavn) == null) {
-                user.adgangskode = null;
-                userDataService.addUser(user);
+                userDataService.addUser(user); 
+                 System.out.println("User inserted with userDataService");
+                morphiaHandler.addUser(user);
+                 System.out.println("User inserted with morphiaHandler");
             }           
             return Response.ok(json).header("Authorization", "Bearer " + token).build();
 
