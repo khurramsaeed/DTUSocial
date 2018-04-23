@@ -23,7 +23,7 @@ public class ChatResource {
     private final ChatService chatService = ChatService.getInstance();
     
     public ChatResource() {
-        Message message = new Message("Hello, this is my message", "s165162", "Jess");
+        Message message = new Message("Hello, this is my message", "s165162", "Jeff");
         chatService.sendMessage(message);
     }
     
@@ -35,10 +35,9 @@ public class ChatResource {
     public Response specificChat(@HeaderParam("Authorization") String authHeader, String senderId) {
         
         String username = JWTService.getUsername(authHeader);
-        System.err.println("UserId: "+ username);
-        System.err.println("SenderId: "+ senderId);
+//        System.err.println("UserId: "+ username);
+//        System.err.println("SenderId: "+ senderId);
         List<Message> messages = chatService.getChatById(username, senderId);
-        System.err.println("CHAAAAAT2: "+ messages.get(0).getMessage());
         return Response.ok(messages).build();
         
     }
