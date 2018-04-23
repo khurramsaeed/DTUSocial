@@ -1,10 +1,18 @@
 package grp21.dtusocial.resource;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import grp21.dtusocial.model.Message;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.ChatService;
 import grp21.dtusocial.service.JWTService;
+import java.io.Serializable;
+import java.io.StringReader;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonReader;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -30,16 +38,18 @@ public class ChatResource {
     @POST
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes("text/plain")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("personal")
     public Response specificChat(@HeaderParam("Authorization") String authHeader, String senderId) {
+        // Retrieve senderId
+        JsonElement jsonElement = new JsonParser().parse(senderId);
+        String value = jsonElement.getAsJsonObject().get("senderId").getAsString();
         
         String username = JWTService.getUsername(authHeader);
-//        System.err.println("UserId: "+ username);
-//        System.err.println("SenderId: "+ senderId);
-        List<Message> messages = chatService.getChatById(username, senderId);
+        List<Message> messages = chatService.getChatById(username, value);
         return Response.ok(messages).build();
         
     }
+    
    
 }

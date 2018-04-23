@@ -1,6 +1,5 @@
 package grp21.dtusocial.service;
 
-import brugerautorisation.data.Bruger;
 import grp21.dtusocial.model.Message;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ public class ChatService {
     private static ChatService instance = new ChatService();
     
     public static ChatService getInstance() {
-        
         return instance;
     }
     
@@ -25,7 +23,7 @@ public class ChatService {
         List<Message> messages = new ArrayList<>();
         
         for (Message message : messageList) {
-            if (message.getUserId().equals(userId) && message.getSenderId().equals(senderId)) {
+            if (message.getReceiverId().equals(userId) && message.getSenderId().equals(senderId)) {
                     messages.add(message);
             }
         }
