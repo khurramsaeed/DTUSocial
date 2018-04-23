@@ -1,38 +1,30 @@
 package grp21.dtusocial.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Khurram Saeed Malik
  */
-public class Message {
-    private String message, receiverId, senderId;
+public class Message implements Serializable {
+    private String message, userId, interactorId;
     private Date time;
-    
-    public Message(String message, String receiverId, String senderId) {
-        this.message = message;
-        this.receiverId = receiverId;
-        this.senderId = senderId;
-        this.time = new Date();
-       
-    }  
-
     
     public String getMessage() {
         return message;
     }
     
-    public String getReceiverId() {
-        return receiverId;
+    public String getUserId() {
+        return userId;
     }
     
     public Date getDate() {
         return time;
     }
     
-    public void setReceiverId(String userId) {
-        this.receiverId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
     
     public void setMessage(String message) {
@@ -43,12 +35,12 @@ public class Message {
         this.time = new Date();
     }
     
-    public String getSenderId() {
-        return senderId;
+    public String getInteractorId() {
+        return interactorId;
     }
     
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
+    public void setInteractorId(String senderId) {
+        this.interactorId = senderId;
     }
     
     

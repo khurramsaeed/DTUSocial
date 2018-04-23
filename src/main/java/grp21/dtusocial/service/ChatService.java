@@ -23,7 +23,7 @@ public class ChatService {
         List<Message> messages = new ArrayList<>();
         
         for (Message message : messageList) {
-            if (message.getReceiverId().equals(userId) && message.getSenderId().equals(senderId)) {
+            if (message.getUserId().equals(userId) && message.getInteractorId().equals(senderId)) {
                     messages.add(message);
             }
         }
