@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.mongodb.morphia.Datastore;
 
 /**
  *
