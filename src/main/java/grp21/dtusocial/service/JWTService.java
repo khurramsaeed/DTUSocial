@@ -9,7 +9,7 @@ import io.jsonwebtoken.Jwts;
  */
 public class JWTService {
 
-    public static String getUsername(String authHeader){
+    public static String resolveUser(String authHeader){
         String token = authHeader.substring("Bearer".length()).trim();
         return Jwts.parser().setSigningKey(SecurityFilter.generatedKey).parseClaimsJws(token).getBody().get("username").toString();
     }

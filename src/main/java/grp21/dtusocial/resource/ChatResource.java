@@ -38,7 +38,7 @@ public class ChatResource {
     @Path("personal")
     public Response sendPersonalMessage(@HeaderParam("Authorization") String authHeader, Message message) {
         try {
-            String userId = JWTService.getUsername(authHeader);
+            String userId = JWTService.resolveUser(authHeader);
             
             Message putMessage = new Message();
 
@@ -74,7 +74,7 @@ public class ChatResource {
         JsonElement jsonElement = new JsonParser().parse(senderId);
         String value = jsonElement.getAsJsonObject().get("senderId").getAsString();
         
-        String username = JWTService.getUsername(authHeader);
+        String username = JWTService.resolveUser(authHeader);
         List<Message> messages = chatService.getChatById(username, value);
         return Response.ok(messages).build();
         
