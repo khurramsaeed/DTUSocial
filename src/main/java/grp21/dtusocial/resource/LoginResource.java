@@ -54,6 +54,7 @@ public class LoginResource {
             String json = new Gson().toJson(token);
             // Add user to userDataService
             if(userDataService.getUserById(user.brugernavn) == null) {
+                user.adgangskode = null;
                 userDataService.addUser(user);
             }           
             return Response.ok(json).header("Authorization", "Bearer " + token).build();
