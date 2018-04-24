@@ -15,6 +15,12 @@ import grp21.dtusocial.model.Todo;
  */
 public class UserTodoService {
       private List<Todo> todoList = new ArrayList<>();
+      private int generateId = 1000;
+
+    public int getGeneratedId() {
+        ++generateId;
+        return generateId;
+    }
       
 
     private static UserTodoService instance = new UserTodoService();
@@ -24,8 +30,9 @@ public class UserTodoService {
     }
 
     public String addTodo(Todo todo) {
+        todo.setTodoId(getGeneratedId()+"");
         todoList.add(todo);
-        return "Added todo: ";
+        return "Added todo: " + todo.getMessage();
     }
 
     public List<Todo> getTodos() {
@@ -42,6 +49,43 @@ public class UserTodoService {
             }
             
         } return userTodoList;
+    }
+
+    public void removeTodo(String todoId) {
+        if (todoList.isEmpty()) return;
+        
+        for (Todo todo : todoList) {
+            if(todo.getTodoId().equals(todoId)) {
+                todoList.remove(todo);
+            }
+            
+        }
+    }
+
+    public Todo getTodoById(String todoId) {
+         if (todoList.isEmpty()) return null;
+
+         
+        for (Todo todo : todoList) {
+            if(todo.getTodoId().equals(todoId)) {
+                return todo;
+            }
+            
+        } return null;
+    }
+
+    public Todo updateTodo(Todo todo) {
+        if (todoList.isEmpty()) return null;
+         
+        for (Todo updateTodo : todoList) {
+            if(updateTodo.getTodoId().equals(todo.getTodoId())) {
+                todoList.remove(updateTodo);
+                todoList.add(todo);
+                return todo;
+            }
+            
+        } return null;
+        
     }
     
     
