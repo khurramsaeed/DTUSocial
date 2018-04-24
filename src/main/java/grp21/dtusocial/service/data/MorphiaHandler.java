@@ -38,12 +38,40 @@ public class MorphiaHandler {
     
     public void addUser(Bruger user){
     coll = db.getCollection("users");
-    BasicDBObject newUser = new BasicDBObject((Map) user); 
+    BasicDBObject newUser = new BasicDBObject("studyID", user.brugernavn);
+     newUser.append("name", user.fornavn + " " + user.efternavn);
      coll.insert(newUser);
-       System.out.println("User inserted");
-   
-  
-   
+       System.out.println("User inserted");   
+    }
+    
+    public void addGroup(String groupName, String[] studyNumbers){
+    coll = db.getCollection("groups");
+    BasicDBObject newGroup = new BasicDBObject("groupName", groupName);
+          for(int i = 1; studyNumbers.length > i; i++){
+          String groupMember = "groupMember " + i;
+          newGroup.append(groupMember, studyNumbers[i]);
+          long groupID = coll.count();
+          newGroup.append("groupID", groupID);
+          }
+        coll.insert(newGroup);
+       System.out.println("Group inserted");   
+    }
+    
+    public void addPersonalMessage(Bruger user1, Bruger user2, String message){
+    coll = db.getCollection("messages");
+    BasicDBObject newMessage = new BasicDBObject("Sender", user1.brugernavn);
+          newMessage.append("Reciever", user2.brugernavn);
+          newMessage.append("Message", message);
+       coll.insert(newMessage);
+       System.out.println("Personal message inserted");   
+    }
+    
+    public void addPersonalTodo(Bruger user, String todo){
+    coll = db.getCollection("todos");
+    BasicDBObject newTodo = new BasicDBObject("User", user.brugernavn);
+          newTodo.append("todo", todo);
+       coll.insert(newTodo);
+       System.out.println("Personal todo inserted");   
     }
 
     public static MorphiaHandler getInstance() throws PersistenceException, UnknownHostException {

@@ -60,14 +60,17 @@ public class LoginResource {
             // Issue a token to client
             String token = issueToken(username);
             String json = new Gson().toJson(token);
+            
             // Add user to userDataService
             if(userDataService.getUserById(user.brugernavn) == null) {
                 userDataService.addUser(user); 
                  System.out.println("User inserted with userDataService");
-                morphiaHandler.addUser(user);
-                 System.out.println("User inserted with morphiaHandler");
+                  morphiaHandler.addUser(user);
+                  System.out.println("User inserted with morphiaHandler");
+                 
             }           
             return Response.ok(json).header("Authorization", "Bearer " + token).build();
+           
 
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
