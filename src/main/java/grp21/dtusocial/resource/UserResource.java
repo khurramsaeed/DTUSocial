@@ -2,6 +2,7 @@ package grp21.dtusocial.resource;
 
 import brugerautorisation.data.Bruger;
 import com.google.gson.Gson;
+import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.UserDataService;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class UserResource {
      */
     @GET
     @Path("{studyNr}")
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("studyNr") String studyNr) {
         if (userDataService.getUserById(studyNr) == null) {

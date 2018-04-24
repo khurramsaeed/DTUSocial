@@ -1,5 +1,6 @@
 package grp21.dtusocial.resource; 
 
+import com.google.gson.Gson;
 import grp21.dtusocial.service.UserTodoService;
 import grp21.dtusocial.model.Todo;
 import java.util.List;
@@ -40,8 +41,9 @@ public class TodoRessource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addTodo(Todo todo) {
+        String json = new Gson().toJson("Success");
         userTodoService.addTodo(todo);
-        return Response.ok("Success").build();
+        return Response.ok(json).build();
     }
     
     
