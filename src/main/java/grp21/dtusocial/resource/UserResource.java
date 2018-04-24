@@ -47,6 +47,18 @@ public class UserResource {
          return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
     }
     
+    /**
+     * Find user by id
+     * @param id
+     * @return User
+     */
+    @GET
+    @Path("{studyNr}/{todos}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response userTodos(@PathParam("todos") String todos) {
+        return  Response.ok("USERS TODOS SHOULD COME HERE").build();
+    }
+    
     
     /**
      * If we want to add new users
