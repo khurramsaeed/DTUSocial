@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import grp21.dtusocial.model.PATCH;
 import grp21.dtusocial.service.UserTodoService;
 import grp21.dtusocial.model.Todo;
+import grp21.dtusocial.service.data.MorphiaHandler;
+import grp21.dtusocial.service.data.PersistenceException;
+import java.net.UnknownHostException;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -24,6 +27,11 @@ import javax.ws.rs.core.Response;
 public class TodoRessource {
     String success = new Gson().toJson("Success");
     private UserTodoService userTodoService = UserTodoService.getInstance();
+    private final MorphiaHandler morphiaHandler;
+    
+      public TodoRessource() throws PersistenceException, UnknownHostException {
+        this.morphiaHandler = MorphiaHandler.getInstance();
+    }
     
     @GET 
     public List<Todo> getTodos() {
@@ -36,6 +44,7 @@ public class TodoRessource {
     public Response addTodo(Todo todo) {
         
         userTodoService.addTodo(todo);
+        morphiaHandler.addPersonalTodo(todo.getTodoId(), todo.getMessage(), todo.getUserId(), false);
         return Response.ok(success).build();
     }
     
@@ -54,7 +63,7 @@ public class TodoRessource {
     @Produces (MediaType.APPLICATION_JSON)
     public Response getUserTodo(@PathParam("todoId")String todoId) {
         try {
-        return Response.ok(userTodoService.getTodoById(todoId)).build();
+        return Response.ok(success).build();
         } catch (Exception e) {
             return Response.status(404).build();
         }
@@ -81,9 +90,12 @@ public class TodoRessource {
     @Path("{todoId}")
     @Produces (MediaType.APPLICATION_JSON)
     public Response deleteTodo(@PathParam("todoId")String todoId) {
-        
-        userTodoService.removeTodo(todoId);
-        
-        return Response.ok(success).build();
-    }
+        try {
+       userTodoService.removeTodo(todoId);
+        morphiaHandler.deletePersonalTodo(todoId);
+       return Response.ok(success).build();
+    }catch (Exception e) {
+           return Response.serverError().build();
+       }
+}
 }

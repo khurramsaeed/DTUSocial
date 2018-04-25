@@ -67,6 +67,7 @@ public class LoginResource {
                  System.out.println("User inserted with userDataService");
                   morphiaHandler.addUser(user);
                   System.out.println("User inserted with morphiaHandler");
+                  
                  
             }           
             return Response.ok(json).header("Authorization", "Bearer " + token).build();
