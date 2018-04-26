@@ -34,5 +34,9 @@ public class ChatService {
     public void sendMessage(Message message) {
         messageList.add(message);
     }
+
+    public List<Message> getMessages() {
+        return messageList;
+    }
     
 }

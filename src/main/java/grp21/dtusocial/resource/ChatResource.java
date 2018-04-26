@@ -1,5 +1,6 @@
 package grp21.dtusocial.resource;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import grp21.dtusocial.model.Message;
@@ -8,6 +9,7 @@ import grp21.dtusocial.service.ChatService;
 import grp21.dtusocial.service.JWTService;
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -22,8 +24,15 @@ import javax.ws.rs.core.Response;
  */
 @Path("chat")
 public class ChatResource {
-    
+    String success = new Gson().toJson("Success");
     private final ChatService chatService = ChatService.getInstance();
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Message> getMessages() {
+        return chatService.getMessages();
+    }
+    
     
     /**
      * Adds message to ChatService
@@ -49,7 +58,7 @@ public class ChatResource {
             
             chatService.sendMessage(putMessage);
             
-            return Response.ok("success").build();
+            return Response.ok(success).build();
 
         } catch (Exception e) {
             return Response.status(Response.Status.fromStatusCode(406)).build();
