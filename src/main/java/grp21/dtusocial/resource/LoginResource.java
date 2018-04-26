@@ -63,6 +63,8 @@ public class LoginResource {
             
             // Add user to userDataService
             if(userDataService.getUserById(user.brugernavn) == null) {
+                user.adgangskode = null;
+                user.ekstraFelter = null;
                 userDataService.addUser(user); 
                  System.out.println("User inserted with userDataService");
                   morphiaHandler.addUser(user);
