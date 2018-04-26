@@ -1,4 +1,4 @@
-package grp21.dtusocial.resource; 
+package grp21.dtusocial.resource;
 
 import com.google.gson.Gson;
 import grp21.dtusocial.model.PATCH;
@@ -22,32 +22,32 @@ import javax.ws.rs.core.Response;
  *
  * @author Nikolaj
  */
-
 @Path("todos")
 public class TodoRessource {
+
     String success = new Gson().toJson("Success");
     private UserTodoService userTodoService = UserTodoService.getInstance();
     private final MorphiaHandler morphiaHandler;
-    
-      public TodoRessource() throws PersistenceException, UnknownHostException {
+
+    public TodoRessource() throws PersistenceException, UnknownHostException {
         this.morphiaHandler = MorphiaHandler.getInstance();
     }
-    
-    @GET 
+
+    @GET
     public List<Todo> getTodos() {
-        return userTodoService.getTodos(); 
+        return userTodoService.getTodos();
     }
-    
-     @PUT
+
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces (MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response addTodo(Todo todo) {
-        
+
         userTodoService.addTodo(todo);
         morphiaHandler.addPersonalTodo(todo.getTodoId(), todo.getMessage(), todo.getUserId(), false);
         return Response.ok(success).build();
     }
-    
+
     /* @GET
     @Path("{studyNr}")
     @Produces (MediaType.APPLICATION_JSON)
@@ -57,45 +57,42 @@ public class TodoRessource {
         }
         return Response.ok(userTodoService.getTodoByUserId(userId)).build();
     } */
-    
     @GET
     @Path("{todoId}")
-    @Produces (MediaType.APPLICATION_JSON)
-    public Response getUserTodo(@PathParam("todoId")String todoId) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserTodo(@PathParam("todoId") String todoId) {
         try {
-        return Response.ok(success).build();
+            return Response.ok(success).build();
         } catch (Exception e) {
             return Response.status(404).build();
         }
-        
+
     }
-    
-    
+
     @PATCH
     @Path("{todoId}")
-    @Produces (MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response patchTodo(Todo todo) {
-        System.err.println("TODOID: "+todo.getTodoId());
+        System.err.println("TODOID: " + todo.getTodoId());
         try {
             userTodoService.updateTodo(todo);
-        return Response.ok(success).build();
+            return Response.ok(success).build();
         } catch (Exception e) {
             return Response.status(404).build();
         }
-        
+
     }
-    
-    
+
     @DELETE
     @Path("{todoId}")
-    @Produces (MediaType.APPLICATION_JSON)
-    public Response deleteTodo(@PathParam("todoId")String todoId) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteTodo(@PathParam("todoId") String todoId) {
         try {
-       userTodoService.removeTodo(todoId);
-        morphiaHandler.deletePersonalTodo(todoId);
-       return Response.ok(success).build();
-    }catch (Exception e) {
-           return Response.serverError().build();
-       }
-}
+            userTodoService.removeTodo(todoId);
+            morphiaHandler.deletePersonalTodo(todoId);
+            return Response.ok(success).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
+    }
 }

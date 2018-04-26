@@ -57,6 +57,7 @@ public class UserTodoService {
         for (Todo todo : todoList) {
             if(todo.getTodoId().equals(todoId)) {
                 todoList.remove(todo);
+                return;
             }
             
         }
