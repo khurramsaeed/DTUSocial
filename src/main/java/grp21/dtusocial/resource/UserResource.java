@@ -33,6 +33,7 @@ public class UserResource {
      * @return User
      */
     @GET
+    @Secured 
     @Path("{studyNr}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("studyNr") String studyNr) {

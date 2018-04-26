@@ -2,6 +2,7 @@ package grp21.dtusocial.resource;
 
 import com.google.gson.Gson;
 import grp21.dtusocial.model.PATCH;
+import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.UserTodoService;
 import grp21.dtusocial.model.Todo;
 import grp21.dtusocial.service.data.MorphiaHandler;
@@ -73,6 +74,7 @@ public class TodoRessource {
 
     @PATCH
     @Path("{todoId}")
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public Response patchTodo(Todo todo) {
         System.err.println("TODOID: " + todo.getTodoId());
@@ -88,6 +90,7 @@ public class TodoRessource {
 
     @DELETE
     @Path("{todoId}")
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteTodo(@PathParam("todoId") String todoId) {
         try {

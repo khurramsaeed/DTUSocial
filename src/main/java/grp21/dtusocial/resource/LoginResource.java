@@ -59,10 +59,10 @@ public class LoginResource {
             
             // Issue a token to client
             String token = issueToken(username);
-            String json = new Gson().toJson(token);
+            String json = new Gson().toJson("Bearer " +token);
             
             // Add user to userDataService
-            if(userDataService.getUserById(user.brugernavn) == null) {
+            /* if(userDataService.getUserById(user.brugernavn) == null) {
                 user.adgangskode = null;
                 user.ekstraFelter = null;
                 userDataService.addUser(user); 
@@ -71,7 +71,7 @@ public class LoginResource {
                   System.out.println("User inserted with morphiaHandler");
                   
                  
-            }           
+            }  */         
             return Response.ok(json).header("Authorization", "Bearer " + token).build();
            
 
