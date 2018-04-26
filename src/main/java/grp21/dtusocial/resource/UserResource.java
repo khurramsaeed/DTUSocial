@@ -34,7 +34,6 @@ public class UserResource {
      */
     @GET
     @Path("{studyNr}")
-    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("studyNr") String studyNr) {
         if (userDataService.getUserById(studyNr) == null) {
