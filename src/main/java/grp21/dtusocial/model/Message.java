@@ -1,7 +1,6 @@
 package grp21.dtusocial.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
@@ -9,7 +8,7 @@ import java.util.Date;
  */
 public class Message implements Serializable {
     private String message, userId, interactorId;
-    private Date time;
+    private long time;
     
     public String getMessage() {
         return message;
@@ -19,7 +18,7 @@ public class Message implements Serializable {
         return userId;
     }
     
-    public Date getDate() {
+    public long getTime() {
         return time;
     }
     
@@ -31,8 +30,8 @@ public class Message implements Serializable {
         this.message = message;
     }
     
-    public void setDate() {
-        this.time = new Date();
+    public void setTime(long time) {
+        this.time = time;
     }
     
     public String getInteractorId() {
