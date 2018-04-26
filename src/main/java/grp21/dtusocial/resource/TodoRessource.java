@@ -77,6 +77,7 @@ public class TodoRessource {
     public Response patchTodo(Todo todo) {
         System.err.println("TODOID: " + todo.getTodoId());
         try {
+            morphiaHandler.updateTodo(todo.getTodoId(), todo.getMessage());
             userTodoService.updateTodo(todo);
             return Response.ok(success).build();
         } catch (Exception e) {
@@ -91,7 +92,7 @@ public class TodoRessource {
     public Response deleteTodo(@PathParam("todoId") String todoId) {
         try {
             userTodoService.removeTodo(todoId);
-            morphiaHandler.deletePersonalTodo(todoId);
+            morphiaHandler.deleteTodo(todoId);
             return Response.ok(success).build();
         } catch (Exception e) {
             return Response.serverError().build();

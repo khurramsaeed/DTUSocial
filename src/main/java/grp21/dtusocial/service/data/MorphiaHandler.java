@@ -114,23 +114,25 @@ public class MorphiaHandler {
        System.out.println("group deleted");   
     }
     
-    public void deletePersonalTodo(String todoID){
-    //collection = (MongoCollection<Document>) db.getCollection("personalTodos");
-    //collection.deleteOne(new Document("todoID", new ObjectId(todoID)));
+    public void deleteTodo(String todoID){
     coll = db.getCollection("personalTodos");
-    BasicDBObject deleteTodo = new BasicDBObject("todoID", todoID);
     coll.remove(new BasicDBObject("todoID", todoID));
            System.out.println("personal todo deleted");   
     }
     
     
-    public void deleteGroupTodo(String todoID){
+
+    
+     public void updateTodo(String todoID, String todoMSG){
     //collection = (MongoCollection<Document>) db.getCollection("groupTodos");
-    //collection.deleteOne(new Document("todoID", new ObjectId(todoID)));
-    coll = db.getCollection("personTodos");
-    BasicDBObject del = new BasicDBObject("todoID", todoID);
-    coll.remove(del);
-       System.out.println("Group todo deleted");   
+    coll = db.getCollection("personalTodos");
+    BasicDBObject searchQuery = new BasicDBObject("todoID", todoID);
+    BasicDBObject updateTodo = new BasicDBObject();
+        updateTodo.append("todoMessage", todoMSG);
+        BasicDBObject setQuery = new BasicDBObject();
+        setQuery.append("$set", updateTodo);
+        coll.update(searchQuery, setQuery);
+       System.out.println("todo updated");   
     }
 
     public static MorphiaHandler getInstance() throws PersistenceException, UnknownHostException {
