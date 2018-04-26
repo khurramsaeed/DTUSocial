@@ -62,7 +62,9 @@ public class TodoRessource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserTodo(@PathParam("todoId") String todoId) {
         try {
-            return Response.ok(success).build();
+            
+            Todo todo = userTodoService.getTodoById(todoId);
+            return Response.ok(todo).build();
         } catch (Exception e) {
             return Response.status(404).build();
         }
