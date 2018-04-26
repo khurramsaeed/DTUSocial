@@ -115,9 +115,12 @@ public class MorphiaHandler {
     }
     
     public void deletePersonalTodo(String todoID){
-    collection = (MongoCollection<Document>) db.getCollection("personalTodos");
-    collection.deleteOne(new Document("todoID", new ObjectId(todoID)));
-       System.out.println("personal todo deleted");   
+    //collection = (MongoCollection<Document>) db.getCollection("personalTodos");
+    //collection.deleteOne(new Document("todoID", new ObjectId(todoID)));
+    coll = db.getCollection("personalTodos");
+    BasicDBObject deleteTodo = new BasicDBObject("todoID", todoID);
+    coll.remove(new BasicDBObject("todoID", todoID));
+           System.out.println("personal todo deleted");   
     }
     
     
