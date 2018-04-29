@@ -65,6 +65,7 @@ public class TodoRessource {
         try {
             
             Todo todo = userTodoService.getTodoById(todoId);
+            morphiaHandler.getTodo(todoId);
             return Response.ok(todo).build();
         } catch (Exception e) {
             return Response.status(404).build();

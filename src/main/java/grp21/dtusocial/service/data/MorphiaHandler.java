@@ -121,6 +121,11 @@ public class MorphiaHandler {
     }
     
     
+     public void getTodo(String todoID) {
+        coll = db.getCollection("personalTodod");
+        BasicDBObject findTodo = new BasicDBObject("todoID", todoID);
+        coll.find(findTodo);
+    }
 
     
      public void updateTodo(String todoID, String todoMSG){
@@ -139,5 +144,7 @@ public class MorphiaHandler {
         if (morphiaHandler==null) morphiaHandler= new MorphiaHandler();
         return morphiaHandler;
     }
+
+   
 
 }
