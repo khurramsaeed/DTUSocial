@@ -1,13 +1,16 @@
-package grp21.dtusocial.model;
+package grp21.dtusocial.service.data.dto;
 
 import java.io.Serializable;
+import org.mongodb.morphia.annotations.Id;
 
 /**
  *
  * @author Khurram Saeed Malik
  */
 public class Message implements Serializable {
-    private String message, userId, interactorId;
+    private String message, interactorId;
+    @Id
+    private String userId;
     private long time;
     
     public String getMessage() {

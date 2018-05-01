@@ -1,13 +1,14 @@
+
 package grp21.dtusocial.resource;
 
 import com.google.gson.Gson;
 import grp21.dtusocial.model.PATCH;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.UserTodoService;
-import grp21.dtusocial.model.Todo;
 import grp21.dtusocial.service.TodoService;
 import grp21.dtusocial.service.data.MorphiaHandler;
 import grp21.dtusocial.service.data.PersistenceException;
+import grp21.dtusocial.service.data.dto.Todo;
 import java.net.UnknownHostException;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -47,7 +48,7 @@ public class TodoRessource {
     public Response addTodo(Todo todo) {
 
         userTodoService.addTodo(todo);
-        morphiaHandler.addPersonalTodo(todo.getTodoId(), todo.getMessage(), todo.getUserId(), false);
+        // morphiaHandler.addPersonalTodo(todo.getTodoId(), todo.getMessage(), todo.getUserId(), false);
         return Response.ok(success).build();
     }
 
@@ -67,7 +68,6 @@ public class TodoRessource {
         try {
             
             Todo todo = userTodoService.getTodoById(todoId);
-            morphiaHandler.getTodo(todoId);
             return Response.ok(todo).build();
         } catch (Exception e) {
             return Response.status(404).build();
@@ -82,7 +82,6 @@ public class TodoRessource {
     public Response patchTodo(Todo todo) {
         System.err.println("TODOID: " + todo.getTodoId());
         try {
-            morphiaHandler.updateTodo(todo.getTodoId(), todo.getMessage());
             userTodoService.updateTodo(todo);
             return Response.ok(success).build();
         } catch (Exception e) {
@@ -98,7 +97,7 @@ public class TodoRessource {
     public Response deleteTodo(@PathParam("todoId") String todoId) {
         try {
             userTodoService.removeTodo(todoId);
-            morphiaHandler.deleteTodo(todoId);
+            // morphiaHandler.deleteTodo(todoId);
             return Response.ok(success).build();
         } catch (Exception e) {
             return Response.serverError().build();

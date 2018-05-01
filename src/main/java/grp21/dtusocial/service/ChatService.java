@@ -1,7 +1,5 @@
 package grp21.dtusocial.service;
-
-import grp21.dtusocial.model.Message;
-import grp21.dtusocial.service.data.MorphiaHandler;
+import grp21.dtusocial.service.data.dto.Message;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +10,7 @@ import java.util.List;
 public class ChatService {
 
     private List<Message> messageList = new ArrayList<>();
-
+    //MorphiaHandler handler = MorphiaHandler.morphiaHandler;
     private static ChatService instance = new ChatService();
     
     public static ChatService getInstance() {
@@ -36,10 +34,9 @@ public class ChatService {
     
     public void sendMessage(Message message) {
         messageList.add(message);
-        
-        
-    }
-
+       //return handler.readPersonalChat(userId, senderId);
+       }
+ 
     public List<Message> getMessages() {
         return messageList;
     }

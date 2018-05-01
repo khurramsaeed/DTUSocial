@@ -1,5 +1,6 @@
 package grp21.dtusocial.model;
 
+import grp21.dtusocial.service.data.dto.Message;
 import java.util.List;
 
 public class Group {

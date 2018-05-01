@@ -1,6 +1,6 @@
 package grp21.dtusocial.service;
 
-import grp21.dtusocial.model.Todo;
+import grp21.dtusocial.service.data.dto.Todo;
 import java.util.HashMap;
 import java.util.List;
 

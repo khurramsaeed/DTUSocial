@@ -40,11 +40,9 @@ import javax.ws.rs.core.StreamingOutput;
 public class LoginResource {
     
     private final UserDataService userDataService = UserDataService.getInstance();
-    private final MorphiaHandler morphiaHandler;
+    //private final MorphiaHandler morphiaHandler;
 
-    public LoginResource() throws PersistenceException, UnknownHostException {
-        this.morphiaHandler = MorphiaHandler.getInstance();
-    }
+    
   
     @POST
     @Produces(MediaType.TEXT_PLAIN)

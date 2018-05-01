@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grp21.dtusocial.model;
+package grp21.dtusocial.service.data.dto;
 
 import brugerautorisation.data.Bruger;
+import org.mongodb.morphia.annotations.Id;
 
 /**
  *
@@ -14,7 +15,9 @@ import brugerautorisation.data.Bruger;
 
 
 public class Todo {
-    private String todoId, message, userId;
+    private String userId, message;
+    @Id
+    private String todoId;
     private boolean done;
     Bruger user;
     

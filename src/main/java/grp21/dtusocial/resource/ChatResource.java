@@ -3,10 +3,13 @@ package grp21.dtusocial.resource;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import grp21.dtusocial.model.Message;
+import grp21.dtusocial.service.data.dto.Message;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.ChatService;
 import grp21.dtusocial.service.JWTService;
+import grp21.dtusocial.service.data.MorphiaHandler;
+import grp21.dtusocial.service.data.PersistenceException;
+import java.net.UnknownHostException;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -27,6 +30,7 @@ import javax.ws.rs.core.Response;
 public class ChatResource {
     String success = new Gson().toJson("Success");
     private final ChatService chatService = ChatService.getInstance();
+   
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -53,7 +57,7 @@ public class ChatResource {
             message.setTime(System.currentTimeMillis());
             
             chatService.sendMessage(message);
-            
+       
             return Response.ok(success).build();
 
         } catch (Exception e) {
@@ -81,6 +85,7 @@ public class ChatResource {
         
         String username = JWTService.resolveUser(authHeader);
         List<Message> messages = chatService.getChatById(username, chatterId);
+        
         return Response.ok(messages).build();
         
     }
