@@ -3,7 +3,9 @@ package grp21.dtusocial.resource;
 import brugerautorisation.data.Bruger;
 import com.google.gson.Gson;
 import grp21.dtusocial.model.Secured;
+import grp21.dtusocial.service.JWTService;
 import grp21.dtusocial.service.UserDataService;
+import grp21.dtusocial.service.UserTodoService;
 import java.util.List;
 
 import javax.ws.rs.*;
@@ -16,7 +18,7 @@ import javax.ws.rs.core.Response;
 @Path("users")
 public class UserResource {
     private final UserDataService userDataService = UserDataService.getInstance();
-    
+    private final UserTodoService userTodoService = UserTodoService.getInstance();
     /**
      * Finds all Users that exist in our backend
      * @return UsersList
@@ -83,5 +85,28 @@ public class UserResource {
     }
     */
     
+    
+       /**
+     * Adds message to ChatService
+     * @param authHeader
+     * @param message
+     * @return 
+     */
+    @GET
+    @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("usertodo")
+    public Response showUserTodos(@HeaderParam("Authorization") String authHeader) {
+        try {
+            String userId = JWTService.resolveUser(authHeader);
+            Bruger user = userDataService.getUserById(userId);
+            String json = new Gson().toJson(user);
+            return Response.ok(userTodoService.getTodoByUserId(userId)).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.fromStatusCode(406)).build();
+        }
+    }
     
 }

@@ -1,10 +1,12 @@
 package grp21.dtusocial.resource;
 
+import brugerautorisation.data.Bruger;
 import com.google.gson.Gson;
 import grp21.dtusocial.model.PATCH;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.UserTodoService;
 import grp21.dtusocial.model.Todo;
+import grp21.dtusocial.service.JWTService;
 import grp21.dtusocial.service.data.MorphiaHandler;
 import grp21.dtusocial.service.data.PersistenceException;
 import java.net.UnknownHostException;
@@ -12,6 +14,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -72,6 +75,14 @@ public class TodoRessource {
         }
 
     }
+    
+           /**
+     * Adds message to ChatService
+     * @param authHeader
+     * @param message
+     * @return 
+     */
+ 
 
     @PATCH
     @Path("{todoId}")
