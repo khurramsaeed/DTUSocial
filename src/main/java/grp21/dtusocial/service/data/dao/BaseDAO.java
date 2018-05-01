@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gru21.dtusocial.interfaces;
+package grp21.dtusocial.service.data.dao;
 
 import grp21.dtusocial.service.data.PersistenceException;
 import grp21.dtusocial.service.data.dto.BaseDTO;
+import grp21.dtusocial.service.data.dto.Todo;
+import gru21.dtusocial.interfaces.ValidException;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.List;
@@ -30,6 +32,11 @@ public interface BaseDAO <T extends BaseDTO>{
     int findByFieldAndUpdateField(String findField, Object findFieldValue, String updateField, Object newValue) throws PersistenceException;
 
     Boolean delete(String oid) throws PersistenceException, ValidException;
+    
+    Boolean deleteById(String fieldName, String objectId) throws PersistenceException, ValidException;
+    
+    Boolean updateTodo(Todo todo) throws PersistenceException, UnknownHostException;
+    
 
 
 }

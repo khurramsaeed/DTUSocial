@@ -4,13 +4,18 @@ package grp21.dtusocial.resource;
 import com.google.gson.Gson;
 import grp21.dtusocial.model.PATCH;
 import grp21.dtusocial.model.Secured;
+import grp21.dtusocial.service.TodoControllerImpl;
 import grp21.dtusocial.service.UserTodoService;
 import grp21.dtusocial.service.TodoService;
 import grp21.dtusocial.service.data.MorphiaHandler;
 import grp21.dtusocial.service.data.PersistenceException;
 import grp21.dtusocial.service.data.dto.Todo;
+import gru21.dtusocial.interfaces.ElementNotFoundException;
+import gru21.dtusocial.interfaces.TodoController;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,26 +33,23 @@ import javax.ws.rs.core.Response;
 @Path("todos")
 public class TodoRessource {
 
+    private TodoController todoController = new TodoControllerImpl();
     String success = new Gson().toJson("Success");
     private UserTodoService userTodoService = UserTodoService.getInstance();
     private TodoService todoService = TodoService.getInstance();
-    private final MorphiaHandler morphiaHandler;
-
-    public TodoRessource() throws PersistenceException, UnknownHostException {
-        this.morphiaHandler = MorphiaHandler.getInstance();
-    }
 
     @GET
-    public List<Todo> getTodos() {
-        return userTodoService.getTodos();
+    public List<Todo> getTodos() throws PersistenceException {
+        return todoController.getAllTodos();
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addTodo(Todo todo) {
-
-        userTodoService.addTodo(todo);
+    public Response addTodo(Todo todo) throws PersistenceException, UnknownHostException {
+        todo.setTodoId(""+userTodoService.getGeneratedId());
+        todoController.saveTodo(todo);
+        // userTodoService.addTodo(todo);
         // morphiaHandler.addPersonalTodo(todo.getTodoId(), todo.getMessage(), todo.getUserId(), false);
         return Response.ok(success).build();
     }
@@ -79,10 +81,11 @@ public class TodoRessource {
     @Path("{todoId}")
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    public Response patchTodo(Todo todo) {
+    public Response patchTodo(Todo todo) throws PersistenceException, ElementNotFoundException, UnknownHostException {
         System.err.println("TODOID: " + todo.getTodoId());
         try {
-            userTodoService.updateTodo(todo);
+            todoController.updateTodo(todo);
+            //userTodoService.updateTodo(todo);
             return Response.ok(success).build();
         } catch (Exception e) {
             return Response.status(404).build();
@@ -94,13 +97,15 @@ public class TodoRessource {
     @Path("{todoId}")
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteTodo(@PathParam("todoId") String todoId) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteTodo(@PathParam("todoId") String todoId) throws PersistenceException, ElementNotFoundException {
         try {
-            userTodoService.removeTodo(todoId);
+            // userTodoService.removeTodo(todoId);
+            todoController.deleteTodo(todoId);
             // morphiaHandler.deleteTodo(todoId);
             return Response.ok(success).build();
         } catch (Exception e) {
-            return Response.serverError().build();
+            return Response.ok(e.getMessage()).build();
         }
     }
     

@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package grp21.dtusocial.service.data.dto;
 
 import brugerautorisation.data.Bruger;
-import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Indexed;
 
 /**
  *
  * @author Nikolaj
  */
 
-
-public class Todo {
-    private String userId, message;
-    @Id
+public class Todo extends BaseDTO {
+    @Indexed
+    private String userId;
+    private String message;
+    @Indexed
     private String todoId;
     private boolean done;
     Bruger user;

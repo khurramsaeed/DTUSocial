@@ -2,12 +2,10 @@ package grp21.dtusocial.service.data.dao;
 import grp21.dtusocial.service.data.MorphiaHandler;
 import grp21.dtusocial.service.data.PersistenceException;
 import grp21.dtusocial.service.data.dto.BaseDTO;
-import gru21.dtusocial.interfaces.BaseDAO;
+import grp21.dtusocial.service.data.dto.Todo;
 import gru21.dtusocial.interfaces.ValidException;
 import java.net.UnknownHostException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
@@ -16,7 +14,7 @@ import org.mongodb.morphia.query.UpdateResults;
 
 /**
  *
- * @author 1234
+ * @author Morten og Khurram
  */
 public class MongoBaseDAO<T extends BaseDTO> implements BaseDAO<T> {
     private final Class<T> type;
@@ -115,6 +113,38 @@ public class MongoBaseDAO<T extends BaseDTO> implements BaseDAO<T> {
             return MorphiaHandler.getInstance().deleteById(objectId,type);
         } catch (IllegalArgumentException e){
             throw new ValidException("ObjectID not Valid: " + oid);
+        }
+
+    }
+    
+    @Override
+    public Boolean deleteById(String fieldName, String objectId) throws PersistenceException, ValidException {
+        try {
+            Query<Todo> query = MorphiaHandler.getDS().createQuery(Todo.class);
+            query.field(fieldName).equal(objectId);
+            MorphiaHandler.getDS().findAndDelete(query);
+            return true;
+        } catch (IllegalArgumentException e){
+            throw new ValidException("Object couldn't be deleted: deleteById()");
+        }
+
+    }
+    
+    
+    @Override
+    public Boolean updateTodo(Todo todo) throws PersistenceException, UnknownHostException {
+        try {
+            
+            Query<Todo> todoQuery = MorphiaHandler.getDS().createQuery(Todo.class).field("todoId").equal(todo.getTodoId());
+            
+            UpdateOperations<Todo> operations = MorphiaHandler.getDS().createUpdateOperations(Todo.class)
+                    .set("message", todo.getMessage());
+                    
+            
+            MorphiaHandler.getDS().update(todoQuery, operations);            
+            return true;
+        } catch (Exception e){
+            throw new PersistenceException("Object couldn't be deleted: deleteById()");
         }
 
     }
