@@ -5,6 +5,7 @@ import grp21.dtusocial.model.PATCH;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.UserTodoService;
 import grp21.dtusocial.model.Todo;
+import grp21.dtusocial.service.TodoService;
 import grp21.dtusocial.service.data.MorphiaHandler;
 import grp21.dtusocial.service.data.PersistenceException;
 import java.net.UnknownHostException;
@@ -28,6 +29,7 @@ public class TodoRessource {
 
     String success = new Gson().toJson("Success");
     private UserTodoService userTodoService = UserTodoService.getInstance();
+    private TodoService todoService = TodoService.getInstance();
     private final MorphiaHandler morphiaHandler;
 
     public TodoRessource() throws PersistenceException, UnknownHostException {
@@ -100,6 +102,39 @@ public class TodoRessource {
             return Response.ok(success).build();
         } catch (Exception e) {
             return Response.serverError().build();
+        }
+    }
+    
+    @PUT
+    @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("personal/{id}")
+    public Response addPersonalTodo(@PathParam("id") String id, Todo todo) {
+        try {
+            todoService.addTodo(id, todo);
+            return Response.ok(success).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.fromStatusCode(406)).build();
+        }
+    }
+    
+    @GET
+    @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("personal/{id}")
+    public Response getPersonalTodos(@PathParam("id") String id) {
+        try {
+            if(todoService.getTodos(id) == null) {
+                Response.status(404).build();
+            }
+            List<Todo> todos = todoService.getTodos(id);
+            return Response.ok(todos).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.fromStatusCode(406)).build();
         }
     }
 }

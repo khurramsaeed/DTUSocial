@@ -1,6 +1,7 @@
 package grp21.dtusocial.service;
 
 import grp21.dtusocial.model.Message;
+import grp21.dtusocial.service.data.MorphiaHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,16 +24,20 @@ public class ChatService {
         List<Message> messages = new ArrayList<>();
         
         for (Message message : messageList) {
-            if (message.getUserId().equals(userId) && message.getInteractorId().equals(senderId)) {
+            if (message.getUserId().equals(userId) && message.getInteractorId().equals(senderId) ||
+                message.getUserId().equals(senderId) && message.getInteractorId().equals(userId)) {
                     messages.add(message);
             }
         }
         // null is used for error handling
         return messages;
+        
     }
     
     public void sendMessage(Message message) {
         messageList.add(message);
+        
+        
     }
 
     public List<Message> getMessages() {
