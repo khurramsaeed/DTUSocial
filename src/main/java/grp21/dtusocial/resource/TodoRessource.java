@@ -7,15 +7,12 @@ import grp21.dtusocial.model.Secured;
 import gru21.dtusocial.controller.TodoControllerImpl;
 import grp21.dtusocial.service.UserTodoService;
 import grp21.dtusocial.service.TodoService;
-import grp21.dtusocial.service.data.MorphiaHandler;
 import grp21.dtusocial.service.data.PersistenceException;
 import grp21.dtusocial.service.data.dto.Todo;
 import grp21.dtusocial.service.data.ElementNotFoundException;
 import gru21.dtusocial.controller.TodoController;
 import java.net.UnknownHostException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -63,6 +60,7 @@ public class TodoRessource {
         }
         return Response.ok(userTodoService.getTodoByUserId(userId)).build();
     } */
+    
     @GET
     @Path("{todoId}")
     @Produces(MediaType.APPLICATION_JSON)
