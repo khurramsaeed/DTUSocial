@@ -4,24 +4,27 @@ import grp21.dtusocial.service.data.dto.Message;
 import java.util.List;
 
 public class Group {
-    List<Message> messages;
+
     String groupId, groupName;
     String users[];
 
-    public Group(List<Message> messages, String groupId, String groupName, String[] users) {
-        this.messages = messages;
+    public Group(String groupId, String groupName, String[] users) {
+        //this.messages = messages;
         this.groupId = groupId;
         this.groupName = groupName;
         this.users = users;
     }
+    
+    public Group(){
+    }
 
-    public List<Message> getMessages() {
+    /*public List<Message> getMessages() {
         return messages;
     }
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
-    }
+    }*/
 
     public String getGroupId() {
         return groupId;

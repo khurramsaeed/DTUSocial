@@ -23,9 +23,14 @@ public class GroupService {
          return instance;
     }
     
+    
     public String addGroup(Group group){
         groupList.add(group);
         return "Groups added " + group;
+    }
+    
+    public List<Group> getGroups(){
+        return groupList;
     }
         
 }
