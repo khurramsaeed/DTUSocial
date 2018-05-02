@@ -134,13 +134,11 @@ public class MongoBaseDAO<T extends BaseDTO> implements BaseDAO<T> {
     @Override
     public Boolean updateTodo(Todo todo) throws PersistenceException, UnknownHostException {
         try {
-            
             Query<Todo> todoQuery = MorphiaHandler.getDS().createQuery(Todo.class).field("todoId").equal(todo.getTodoId());
-            
             UpdateOperations<Todo> operations = MorphiaHandler.getDS().createUpdateOperations(Todo.class)
                     .set("message", todo.getMessage());
-                    
             
+            // TODO: Update done() also for todo
             MorphiaHandler.getDS().update(todoQuery, operations);            
             return true;
         } catch (Exception e){
