@@ -1,6 +1,6 @@
 package grp21.dtusocial.service.data.dto;
 
-import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Indexed;
 
 /**
  *
@@ -8,7 +8,7 @@ import org.mongodb.morphia.annotations.Id;
  */
 public class Message extends BaseDTO {
     private String message, interactorId;
-    @Id
+    @Indexed
     private String userId;
     private long time;
     

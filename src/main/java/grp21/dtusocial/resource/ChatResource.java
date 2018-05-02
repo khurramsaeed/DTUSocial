@@ -7,10 +7,13 @@ import grp21.dtusocial.service.data.dto.Message;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.ChatService;
 import grp21.dtusocial.service.JWTService;
-import grp21.dtusocial.service.data.MorphiaHandler;
 import grp21.dtusocial.service.data.PersistenceException;
+import gru21.dtusocial.controller.MessageController;
+import gru21.dtusocial.controller.MessageControllerImpl;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -28,14 +31,17 @@ import javax.ws.rs.core.Response;
  */
 @Path("chat")
 public class ChatResource {
+    private MessageController messageController = new MessageControllerImpl();
     String success = new Gson().toJson("Success");
     private final ChatService chatService = ChatService.getInstance();
    
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Message> getMessages() {
-        return chatService.getMessages();
+    public List<Message> getMessages() throws PersistenceException {
+        return messageController.getAllMessages();
+               // chatService.getMessages();
+        
     }
     
     
@@ -50,14 +56,14 @@ public class ChatResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("personal")
-    public Response sendPersonalMessage(@HeaderParam("Authorization") String authHeader, Message message) {
+    public Response sendPersonalMessage(@HeaderParam("Authorization") String authHeader, Message message) throws PersistenceException {
         try {
             String userId = JWTService.resolveUser(authHeader);
             message.setUserId(userId);
             message.setTime(System.currentTimeMillis());
             
-            chatService.sendMessage(message);
-       
+            //chatService.sendMessage(message);
+            messageController.sendMessage(message);
             return Response.ok(success).build();
 
         } catch (Exception e) {
@@ -78,14 +84,17 @@ public class ChatResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("personal/{chatterId}")
-    public Response getPersonalChat(@HeaderParam("Authorization") String authHeader, @PathParam("chatterId") String chatterId) {
+    public Response getPersonalChat(@HeaderParam("Authorization") String authHeader, @PathParam("chatterId") String chatterId) throws PersistenceException {
         // Retrieve senderId
         // JsonElement jsonElement = new JsonParser().parse(senderId);
         // String value = jsonElement.getAsJsonObject().get("senderId").getAsString();
         
         String username = JWTService.resolveUser(authHeader);
-        List<Message> messages = chatService.getChatById(username, chatterId);
-        
+        //List<Message> messages = chatService.getChatById(username, chatterId);
+        Map<String, Object> fields = new HashMap();
+        fields.put("userId", username);
+        fields.put("interactorId", chatterId);
+        List<Message> messages = messageController.getPersonalMessages(fields);
         return Response.ok(messages).build();
         
     }
