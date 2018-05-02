@@ -6,6 +6,11 @@ import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.JWTService;
 import grp21.dtusocial.service.UserDataService;
 import grp21.dtusocial.service.UserTodoService;
+import grp21.dtusocial.service.data.PersistenceException;
+import grp21.dtusocial.service.data.dto.Todo;
+import gru21.dtusocial.controller.TodoController;
+import gru21.dtusocial.controller.TodoControllerImpl;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ws.rs.*;
@@ -19,6 +24,8 @@ import javax.ws.rs.core.Response;
 public class UserResource {
     private final UserDataService userDataService = UserDataService.getInstance();
     private final UserTodoService userTodoService = UserTodoService.getInstance();
+    private TodoController todoController = new TodoControllerImpl();
+    
     /**
      * Finds all Users that exist in our backend
      * @return UsersList
@@ -50,19 +57,6 @@ public class UserResource {
     }
     
     /**
-     * Find user by id
-     * @param id
-     * @return User
-     */
-    @GET
-    @Path("{studyNr}/{todos}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response userTodos(@PathParam("todos") String todos) {
-        return  Response.ok("USERS TODOS SHOULD COME HERE").build();
-    }
-    
-    
-    /**
      * If we want to add new users
      * @param newUser
      * @return 
@@ -86,8 +80,8 @@ public class UserResource {
     */
     
     
-       /**
-     * Adds message to ChatService
+     /**
+     * Gets user todos by id
      * @param authHeader
      * @param message
      * @return 
@@ -96,13 +90,13 @@ public class UserResource {
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("usertodo")
-    public Response showUserTodos(@HeaderParam("Authorization") String authHeader) {
+    @Path("{studyNr}/todos")
+    public Response showUserTodos(@HeaderParam("Authorization") String authHeader) throws PersistenceException {
         try {
             String userId = JWTService.resolveUser(authHeader);
-            Bruger user = userDataService.getUserById(userId);
-            String json = new Gson().toJson(user);
-            return Response.ok(userTodoService.getTodoByUserId(userId)).build();
+            Collection<Todo> userTodos = todoController.getAllUserTodos(userId);
+            // Bruger user = userDataService.getUserById(userId);
+            return Response.ok(userTodos).build();
 
         } catch (Exception e) {
             return Response.status(Response.Status.fromStatusCode(406)).build();

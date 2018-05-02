@@ -7,7 +7,10 @@ import java.util.List;
 /**
  *
  * @author Khurram Saeed Malik
+ * This java class is not used anymore
+ * We use mongodb controller classes to manage data now
  */
+@Deprecated
 public class TodoService {
     
  private HashMap<String, List<Todo>> todoList = new HashMap<>();
