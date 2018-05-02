@@ -3,7 +3,7 @@ import grp21.dtusocial.service.data.MorphiaHandler;
 import grp21.dtusocial.service.data.PersistenceException;
 import grp21.dtusocial.service.data.dto.BaseDTO;
 import grp21.dtusocial.service.data.dto.Todo;
-import gru21.dtusocial.interfaces.ValidException;
+import grp21.dtusocial.service.data.ValidException;
 import java.net.UnknownHostException;
 import java.util.*;
 import org.bson.types.ObjectId;
@@ -144,7 +144,7 @@ public class MongoBaseDAO<T extends BaseDTO> implements BaseDAO<T> {
             MorphiaHandler.getDS().update(todoQuery, operations);            
             return true;
         } catch (Exception e){
-            throw new PersistenceException("Object couldn't be deleted: deleteById()");
+            throw new PersistenceException("Object couldn't be U: deleteById()");
         }
 
     }

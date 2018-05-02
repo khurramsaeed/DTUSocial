@@ -2,7 +2,6 @@ package grp21.dtusocial.service.data;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteResult;
-import dto.User;
 import grp21.dtusocial.service.data.dto.BaseDTO;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -219,7 +218,7 @@ public class MorphiaHandler {
     
     */
 
-   public static void main(String[] args) throws PersistenceException, UnknownHostException {
+  /* public static void main(String[] args) throws PersistenceException, UnknownHostException {
       User user = new User();
       user.setName("Brian");
       user.setStudyId("s162682");
@@ -233,5 +232,5 @@ public class MorphiaHandler {
         System.out.println(asList.get(0).getName());
         System.out.println(userBrian.getName());
    }
-
+*/
 }

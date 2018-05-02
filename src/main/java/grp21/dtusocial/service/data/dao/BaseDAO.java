@@ -8,7 +8,7 @@ package grp21.dtusocial.service.data.dao;
 import grp21.dtusocial.service.data.PersistenceException;
 import grp21.dtusocial.service.data.dto.BaseDTO;
 import grp21.dtusocial.service.data.dto.Todo;
-import gru21.dtusocial.interfaces.ValidException;
+import grp21.dtusocial.service.data.ValidException;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.List;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gru21.dtusocial.interfaces;
+package grp21.dtusocial.service.data;
 
 /**
  *
