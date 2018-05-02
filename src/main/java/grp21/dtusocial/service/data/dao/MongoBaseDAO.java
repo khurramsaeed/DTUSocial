@@ -87,7 +87,7 @@ public class MongoBaseDAO<T extends BaseDTO> implements BaseDAO<T> {
         Query<T> query = MorphiaHandler.getDS().createQuery(type);
         Set<Map.Entry<String, Object>> entries = fields.entrySet();
         for (Map.Entry<String,Object> entry: entries) {
-            query.field(entry.getKey()).equals(entry.getValue());
+            query.field(entry.getKey()).equal(entry.getValue());
         }
         return query.asList();
     }
