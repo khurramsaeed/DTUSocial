@@ -1,4 +1,3 @@
-
 package grp21.dtusocial.resource;
 
 import com.google.gson.Gson;
@@ -25,9 +24,8 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Nikolaj Holm
- * Revised: Khurram Saeed Malik
- * This resource personal todos and todos shared with other users
+ * @author Nikolaj Holm Revised: Khurram Saeed Malik This resource personal
+ * todos and todos shared with other users
  */
 @Path("todos")
 public class TodoRessource {
@@ -37,12 +35,11 @@ public class TodoRessource {
     private UserTodoService userTodoService = UserTodoService.getInstance();
     private TodoService todoService = TodoService.getInstance();
 
-    
     /**
-     * Returns all todos from backend
-     * Only for test purposes
+     * Returns all todos from backend Only for test purposes
+     *
      * @return
-     * @throws PersistenceException 
+     * @throws PersistenceException
      */
     @GET
     public List<Todo> getTodos() throws PersistenceException {
@@ -51,26 +48,35 @@ public class TodoRessource {
 
     /**
      * This method adds saves new todos added by respected clients
+     *
      * @param todo
      * @return
      * @throws PersistenceException
-     * @throws UnknownHostException 
+     * @throws UnknownHostException
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addTodo(Todo todo) throws PersistenceException, UnknownHostException {
-        todo.setTodoId(""+userTodoService.getGeneratedId());
+        todo.setTodoId("" + userTodoService.getGeneratedId());
+        if (todo.getTodoId().length() == 14) {
+            String sharedId = todo.getUserId();
+            todo.setUserId("SharedResource");
+            todo.setSharedId(sharedId);
+
+            todoController.saveTodo(todo);
+            return Response.ok(success).build();
+        }
         todoController.saveTodo(todo);
         return Response.ok(success).build();
     }
 
     /**
-     * Returns a todo by todoId
-     * Not implemented in frontend yet
+     * Returns a todo by todoId Not implemented in frontend yet
+     *
      * @param todoId
      * @return
-     * @throws PersistenceException 
+     * @throws PersistenceException
      */
     @GET
     @Path("{todoId}")
@@ -87,11 +93,12 @@ public class TodoRessource {
 
     /**
      * Updates an existing todo
+     *
      * @param todo
      * @return
      * @throws PersistenceException
      * @throws ElementNotFoundException
-     * @throws UnknownHostException 
+     * @throws UnknownHostException
      */
     @PATCH
     @Path("{todoId}")
@@ -110,10 +117,11 @@ public class TodoRessource {
 
     /**
      * Deletes a todo
+     *
      * @param todoId
      * @return
      * @throws PersistenceException
-     * @throws ElementNotFoundException 
+     * @throws ElementNotFoundException
      */
     @DELETE
     @Path("{todoId}")
@@ -128,48 +136,50 @@ public class TodoRessource {
             return Response.ok(e.getMessage()).build();
         }
     }
-    
+
     /**
      * Saves a shared todo with a user
+     *
      * @param id
      * @param todo
-     * @return 
+     * @return
      */
     @PUT
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("personal/{id}")
-    public Response addPersonalTodo(@PathParam("id") String id, Todo todo) {
-        try {
-            todoService.addTodo(id, todo);
-            return Response.ok(success).build();
-
-        } catch (Exception e) {
-            return Response.status(Response.Status.fromStatusCode(406)).build();
-        }
+    @Path("shared")
+    public Response addPersonalTodo(Todo todo) throws PersistenceException, UnknownHostException {
+        // Shared todos are saved the same way as personal todos but instead now we combine two study numbers
+        // So we can later retrieve todos
+        // UserId + SharedUserId = todo.userId
+        
+        String sharedId = todo.getUserId();
+        todo.setUserId("SharedResource");
+        todo.setSharedId(sharedId);
+        
+        todoController.saveTodo(todo);
+        return Response.ok(success).build();
     }
-    
+
     /**
      * Gets shared todos with a user
+     *
      * @param id
-     * @return 
+     * @return
      */
     @GET
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("personal/{id}")
-    public Response getPersonalTodos(@PathParam("id") String id) {
+    @Path("shared/{sharedId}")
+    public Response getPersonalTodos(@PathParam("sharedId") String sharedId) throws PersistenceException {
         try {
-            if(todoService.getTodos(id) == null) {
-                Response.status(404).build();
-            }
-            List<Todo> todos = todoService.getTodos(id);
-            return Response.ok(todos).build();
+            List<Todo> todo = todoController.getTodoById("userId", sharedId);
+            return Response.ok(todo.get(0)).build();
 
         } catch (Exception e) {
-            return Response.status(Response.Status.fromStatusCode(406)).build();
+            return Response.status(Response.Status.fromStatusCode(406)).entity(e.getMessage()).build();
         }
     }
 }
