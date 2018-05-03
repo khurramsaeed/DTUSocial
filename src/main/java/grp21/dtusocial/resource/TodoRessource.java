@@ -25,7 +25,9 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Nikolaj
+ * @author Nikolaj Holm
+ * Revised: Khurram Saeed Malik
+ * This resource personal todos and todos shared with other users
  */
 @Path("todos")
 public class TodoRessource {
@@ -35,46 +37,62 @@ public class TodoRessource {
     private UserTodoService userTodoService = UserTodoService.getInstance();
     private TodoService todoService = TodoService.getInstance();
 
+    
+    /**
+     * Returns all todos from backend
+     * Only for test purposes
+     * @return
+     * @throws PersistenceException 
+     */
     @GET
     public List<Todo> getTodos() throws PersistenceException {
         return todoController.getAllTodos();
     }
 
+    /**
+     * This method adds saves new todos added by respected clients
+     * @param todo
+     * @return
+     * @throws PersistenceException
+     * @throws UnknownHostException 
+     */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addTodo(Todo todo) throws PersistenceException, UnknownHostException {
         todo.setTodoId(""+userTodoService.getGeneratedId());
         todoController.saveTodo(todo);
-        // userTodoService.addTodo(todo);
-        // morphiaHandler.addPersonalTodo(todo.getTodoId(), todo.getMessage(), todo.getUserId(), false);
         return Response.ok(success).build();
     }
 
-    /* @GET
-    @Path("{studyNr}")
-    @Produces (MediaType.APPLICATION_JSON)
-    public Response getUserTodo(@PathParam("studyNr")String userId) {
-        if (userTodoService.getTodoByUserId(userId) == null) {
-            return Response.ok("Couldn't found any todos for user!").build();
-        }
-        return Response.ok(userTodoService.getTodoByUserId(userId)).build();
-    } */
-    
+    /**
+     * Returns a todo by todoId
+     * Not implemented in frontend yet
+     * @param todoId
+     * @return
+     * @throws PersistenceException 
+     */
     @GET
     @Path("{todoId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserTodo(@PathParam("todoId") String todoId) {
+    public Response getTodoById(@PathParam("todoId") String todoId) throws PersistenceException {
         try {
-            
-            Todo todo = userTodoService.getTodoById(todoId);
-            return Response.ok(todo).build();
+            List<Todo> todo = todoController.getTodoById("todoId", todoId);
+            return Response.ok(todo.get(0)).build();
         } catch (Exception e) {
             return Response.status(404).build();
         }
 
     }
 
+    /**
+     * Updates an existing todo
+     * @param todo
+     * @return
+     * @throws PersistenceException
+     * @throws ElementNotFoundException
+     * @throws UnknownHostException 
+     */
     @PATCH
     @Path("{todoId}")
     @Secured
@@ -83,7 +101,6 @@ public class TodoRessource {
         System.err.println("TODOID: " + todo.getTodoId());
         try {
             todoController.updateTodo(todo);
-            //userTodoService.updateTodo(todo);
             return Response.ok(success).build();
         } catch (Exception e) {
             return Response.status(404).build();
@@ -91,6 +108,13 @@ public class TodoRessource {
 
     }
 
+    /**
+     * Deletes a todo
+     * @param todoId
+     * @return
+     * @throws PersistenceException
+     * @throws ElementNotFoundException 
+     */
     @DELETE
     @Path("{todoId}")
     @Secured
@@ -98,15 +122,19 @@ public class TodoRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteTodo(@PathParam("todoId") String todoId) throws PersistenceException, ElementNotFoundException {
         try {
-            // userTodoService.removeTodo(todoId);
             todoController.deleteTodo(todoId);
-            // morphiaHandler.deleteTodo(todoId);
             return Response.ok(success).build();
         } catch (Exception e) {
             return Response.ok(e.getMessage()).build();
         }
     }
     
+    /**
+     * Saves a shared todo with a user
+     * @param id
+     * @param todo
+     * @return 
+     */
     @PUT
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
@@ -122,6 +150,11 @@ public class TodoRessource {
         }
     }
     
+    /**
+     * Gets shared todos with a user
+     * @param id
+     * @return 
+     */
     @GET
     @Secured
     @Produces(MediaType.APPLICATION_JSON)

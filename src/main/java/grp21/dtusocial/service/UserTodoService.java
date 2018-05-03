@@ -13,6 +13,7 @@ import grp21.dtusocial.service.data.dto.Todo;
  *
  * @author Nikolaj
  */
+@Deprecated
 public class UserTodoService {
       private List<Todo> todoList = new ArrayList<>();
       private int generateId = 1000;

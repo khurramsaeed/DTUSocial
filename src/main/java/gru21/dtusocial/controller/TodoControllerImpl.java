@@ -10,6 +10,8 @@ import grp21.dtusocial.service.data.ValidException;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -51,6 +53,15 @@ public class TodoControllerImpl implements TodoController {
             return false;
         }
         
+    }
+
+    @Override
+    public List<Todo> getTodoById(String field, String id) throws PersistenceException, UnknownHostException {
+        try {
+            return todoDAO.findByField(field, id);
+        } catch (Exception ex) {
+            return null;
+        }
     }
     
 }

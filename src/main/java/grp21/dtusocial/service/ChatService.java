@@ -6,7 +6,10 @@ import java.util.List;
 /**
  *
  * @author Khurram Saeed Malik
+ * This class is deprecated because we store data in mongodb now
+ * No need to save data in java objects
  */
+@Deprecated
 public class ChatService {
 
     private List<Message> messageList = new ArrayList<>();

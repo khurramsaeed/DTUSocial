@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jwts;
 /**
  *
  * @author Khurram Saeed Malik
+ * Extracts username from authorization token
+ * username is than used for various services, such as chat
  */
 public class JWTService {
 

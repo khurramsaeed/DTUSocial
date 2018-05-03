@@ -17,7 +17,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Date;
-import java.util.List;
 import javax.json.Json;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -31,16 +30,14 @@ import javax.ws.rs.core.StreamingOutput;
 /**
  *
  * @author Khurram Saeed Malik
+ * This resource is responsible for authentication of a user
  */
 
 @Path("login")
 public class LoginResource {
     
     private final UserDataService userDataService = UserDataService.getInstance();
-    //private final MorphiaHandler morphiaHandler;
 
-    
-  
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -56,25 +53,17 @@ public class LoginResource {
             String token = issueToken(username);
             String json = new Gson().toJson("Bearer " +token);
             
-            // Add user to userDataService
-            /* if(userDataService.getUserById(user.brugernavn) == null) {
-                user.adgangskode = null;
-                user.ekstraFelter = null;
-                userDataService.addUser(user); 
-                 System.out.println("User inserted with userDataService");
-                  morphiaHandler.addUser(user);
-                  System.out.println("User inserted with morphiaHandler");
-                  
-                 
-            }  */         
             return Response.ok(json).header("Authorization", "Bearer " + token).build();
-           
 
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
     
+    /**
+     * Method not allowed error message build
+     * @return 
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRequest() {
@@ -82,7 +71,7 @@ public class LoginResource {
         Writer writer = new BufferedWriter(new OutputStreamWriter(baos));
         final javax.json.stream.JsonGenerator gen = Json.createGenerator(writer);
         gen.writeStartObject()
-                .write("message", "Requested URL doesn't exist")
+                .write("message", "Method not allowed")
                 .writeEnd();
         gen.close();
         StreamingOutput stream = new StreamingOutput() {
@@ -92,7 +81,7 @@ public class LoginResource {
                 writer.flush();
             }
         };
-        return Response.ok(stream).type(MediaType.APPLICATION_JSON).build();
+        return Response.status(405).entity(stream).type(MediaType.APPLICATION_JSON).build();
     }
 
     /**
@@ -114,9 +103,7 @@ public class LoginResource {
      * @return 
      */
     private String issueToken(String username) {
-        List<String> roller = null;
         long nowMillis = System.currentTimeMillis();
-        Date now = new Date(nowMillis);
         long ttlMillis = 3600000L; // to timer
         
         JwtBuilder builder =  Jwts.builder()

@@ -18,7 +18,7 @@ import java.util.Map;
  *
  * @author 1234
  */
-public interface BaseDAO <T extends BaseDTO>{
+public interface BaseDAO <T extends BaseDTO> {
     T save(T element) throws PersistenceException, UnknownHostException;
     List<T> saveMultiple(List<T> elements) throws PersistenceException;
 
