@@ -23,7 +23,6 @@ import javax.ws.rs.core.Response;
 @Path("users")
 public class UserResource {
     private final UserDataService userDataService = UserDataService.getInstance();
-    private final UserTodoService userTodoService = UserTodoService.getInstance();
     private TodoController todoController = new TodoControllerImpl();
     
     /**

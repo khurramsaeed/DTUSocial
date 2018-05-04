@@ -3,7 +3,6 @@ package grp21.dtusocial.resource;
 import com.google.gson.Gson;
 import grp21.dtusocial.service.data.dto.Message;
 import grp21.dtusocial.model.Secured;
-import grp21.dtusocial.service.ChatService;
 import grp21.dtusocial.service.JWTService;
 import grp21.dtusocial.service.data.PersistenceException;
 import gru21.dtusocial.controller.MessageController;

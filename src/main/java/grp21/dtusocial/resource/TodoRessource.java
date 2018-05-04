@@ -138,31 +138,6 @@ public class TodoRessource {
     }
 
     /**
-     * Saves a shared todo with a user
-     *
-     * @param id
-     * @param todo
-     * @return
-     */
-    @PUT
-    @Secured
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("shared")
-    public Response addPersonalTodo(Todo todo) throws PersistenceException, UnknownHostException {
-        // Shared todos are saved the same way as personal todos but instead now we combine two study numbers
-        // So we can later retrieve todos
-        // UserId + SharedUserId = todo.userId
-        
-        String sharedId = todo.getUserId();
-        todo.setUserId("SharedResource");
-        todo.setSharedId(sharedId);
-        
-        todoController.saveTodo(todo);
-        return Response.ok(success).build();
-    }
-
-    /**
      * Gets shared todos with a user
      *
      * @param id
@@ -176,7 +151,7 @@ public class TodoRessource {
     public Response getPersonalTodos(@PathParam("sharedId") String sharedId) throws PersistenceException {
         try {
             List<Todo> todo = todoController.getTodoById("userId", sharedId);
-            return Response.ok(todo.get(0)).build();
+            return Response.ok(todo).build();
 
         } catch (Exception e) {
             return Response.status(Response.Status.fromStatusCode(406)).entity(e.getMessage()).build();
