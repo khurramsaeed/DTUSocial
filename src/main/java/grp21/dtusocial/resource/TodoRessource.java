@@ -149,8 +149,11 @@ public class TodoRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("shared/{sharedId}")
     public Response getPersonalTodos(@PathParam("sharedId") String sharedId) throws PersistenceException {
+            String sharedIdR = sharedId.subSequence(7, 14) + "" + sharedId.subSequence(0, 7);
         try {
             List<Todo> todo = todoController.getTodoById("userId", sharedId);
+            List<Todo> todoR = todoController.getTodoById("userId", sharedIdR);
+            todo.addAll(todoR);
             return Response.ok(todo).build();
 
         } catch (Exception e) {
