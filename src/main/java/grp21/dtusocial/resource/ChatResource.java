@@ -7,6 +7,10 @@ import grp21.dtusocial.service.JWTService;
 import grp21.dtusocial.service.data.PersistenceException;
 import gru21.dtusocial.controller.MessageController;
 import gru21.dtusocial.controller.MessageControllerImpl;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +60,8 @@ public class ChatResource {
         try {
             String userId = JWTService.resolveUser(authHeader);
             message.setUserId(userId);
-            message.setTime(System.currentTimeMillis());
+
+            message.setTime(System.currentTimeMillis() / 1000L);
             
             messageController.sendMessage(message);
             return Response.ok(success).build();
@@ -84,11 +89,25 @@ public class ChatResource {
     public Response getPersonalChat(@HeaderParam("Authorization") String authHeader, @PathParam("chatterId") String chatterId) throws PersistenceException {
         String username = JWTService.resolveUser(authHeader);
         // Build request for mongo: get from mongodb via multiple fields
-        Map<String, Object> fields = new HashMap();
-        fields.put("userId", username);
-        fields.put("interactorId", chatterId);
+        Map<String, Object> fieldsUser = new HashMap();
+        fieldsUser.put("userId", username);
+        fieldsUser.put("interactorId", chatterId);
+        
+        Map<String, Object> fieldsInteractor = new HashMap();
+        fieldsInteractor.put("userId", chatterId);
+        fieldsInteractor.put("interactorId", username);
         // Retrieve from mongodb
-        List<Message> messages = messageController.getPersonalMessages(fields);
+        List<Message> messages = messageController.getPersonalMessages(fieldsUser);
+        List<Message> messagesInteractor = messageController.getPersonalMessages(fieldsInteractor);
+        messages.addAll(messagesInteractor);
+        
+        Collections.sort(messages, new Comparator<Message>(){
+            @Override
+            public int compare(Message m1, Message m2) {
+                return Long.compare(m1.getTime(), m2.getTime());  
+            }
+        });
+        
         return Response.ok(messages).build();
         
     }
