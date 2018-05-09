@@ -1,6 +1,6 @@
-package grp21.dtusocial.service.data.dao;
+package grp21.dtusocial.data.dao;
 
-import grp21.dtusocial.service.data.dto.Todo;
+import grp21.dtusocial.data.dto.Todo;
 
 /**
  *

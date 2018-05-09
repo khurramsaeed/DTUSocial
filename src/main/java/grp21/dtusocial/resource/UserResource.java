@@ -6,10 +6,10 @@ import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.JWTService;
 import grp21.dtusocial.service.UserDataService;
 import grp21.dtusocial.service.UserTodoService;
-import grp21.dtusocial.service.data.PersistenceException;
-import grp21.dtusocial.service.data.dto.Todo;
-import gru21.dtusocial.controller.TodoController;
-import gru21.dtusocial.controller.TodoControllerImpl;
+import grp21.dtusocial.data.PersistenceException;
+import grp21.dtusocial.data.dto.Todo;
+import grp21.dtusocial.data.controller.TodoController;
+import grp21.dtusocial.data.controller.TodoControllerImpl;
 import java.util.Collection;
 import java.util.List;
 

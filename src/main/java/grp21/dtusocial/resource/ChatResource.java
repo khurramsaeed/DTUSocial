@@ -1,14 +1,12 @@
 package grp21.dtusocial.resource;
 
 import com.google.gson.Gson;
-import grp21.dtusocial.service.data.dto.Message;
+import grp21.dtusocial.data.dto.Message;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.JWTService;
-import grp21.dtusocial.service.data.PersistenceException;
-import gru21.dtusocial.controller.MessageController;
-import gru21.dtusocial.controller.MessageControllerImpl;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import grp21.dtusocial.data.PersistenceException;
+import grp21.dtusocial.data.controller.MessageController;
+import grp21.dtusocial.data.controller.MessageControllerImpl;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grp21.dtusocial.service.data.dao;
+package grp21.dtusocial.data.dao;
 
-import grp21.dtusocial.service.data.dto.Message;
+import grp21.dtusocial.data.dto.Message;
 
 
 /**

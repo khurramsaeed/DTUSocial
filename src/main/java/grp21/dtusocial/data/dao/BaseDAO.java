@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package grp21.dtusocial.service.data.dao;
+package grp21.dtusocial.data.dao;
 
-import grp21.dtusocial.service.data.PersistenceException;
-import grp21.dtusocial.service.data.dto.BaseDTO;
-import grp21.dtusocial.service.data.dto.Todo;
-import grp21.dtusocial.service.data.ValidException;
+import grp21.dtusocial.data.PersistenceException;
+import grp21.dtusocial.data.dto.BaseDTO;
+import grp21.dtusocial.data.dto.Todo;
+import grp21.dtusocial.data.ValidException;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.List;

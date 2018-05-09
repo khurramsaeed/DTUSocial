@@ -7,7 +7,7 @@ package grp21.dtusocial.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import grp21.dtusocial.service.data.dto.Todo;
+import grp21.dtusocial.data.dto.Todo;
 
 /**
  *

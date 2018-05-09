@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 /**
  *
  * @author Khurram Saeed Malik
+ * Simple TUI Client only used for test purposes
  */
 public class Client {
 

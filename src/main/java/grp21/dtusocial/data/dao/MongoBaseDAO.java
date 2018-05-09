@@ -1,9 +1,9 @@
-package grp21.dtusocial.service.data.dao;
-import grp21.dtusocial.service.data.MorphiaHandler;
-import grp21.dtusocial.service.data.PersistenceException;
-import grp21.dtusocial.service.data.dto.BaseDTO;
-import grp21.dtusocial.service.data.dto.Todo;
-import grp21.dtusocial.service.data.ValidException;
+package grp21.dtusocial.data.dao;
+import grp21.dtusocial.data.MorphiaHandler;
+import grp21.dtusocial.data.PersistenceException;
+import grp21.dtusocial.data.dto.BaseDTO;
+import grp21.dtusocial.data.dto.Todo;
+import grp21.dtusocial.data.ValidException;
 import java.net.UnknownHostException;
 import java.util.*;
 import org.bson.types.ObjectId;

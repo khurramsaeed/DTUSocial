@@ -1,5 +1,5 @@
 package grp21.dtusocial.service;
-import grp21.dtusocial.service.data.dto.Message;
+import grp21.dtusocial.data.dto.Message;
 import java.util.ArrayList;
 import java.util.List;
 

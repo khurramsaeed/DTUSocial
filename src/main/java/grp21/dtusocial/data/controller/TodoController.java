@@ -1,9 +1,9 @@
-package gru21.dtusocial.controller;
+package grp21.dtusocial.data.controller;
 
-import grp21.dtusocial.service.data.ValidException;
-import grp21.dtusocial.service.data.ElementNotFoundException;
-import grp21.dtusocial.service.data.PersistenceException;
-import grp21.dtusocial.service.data.dto.Todo;
+import grp21.dtusocial.data.ValidException;
+import grp21.dtusocial.data.ElementNotFoundException;
+import grp21.dtusocial.data.PersistenceException;
+import grp21.dtusocial.data.dto.Todo;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.List;

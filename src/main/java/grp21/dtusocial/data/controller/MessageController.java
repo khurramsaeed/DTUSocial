@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package gru21.dtusocial.controller;
+package grp21.dtusocial.data.controller;
 
-import grp21.dtusocial.service.data.PersistenceException;
-import grp21.dtusocial.service.data.dto.Message;
+import grp21.dtusocial.data.PersistenceException;
+import grp21.dtusocial.data.dto.Message;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;

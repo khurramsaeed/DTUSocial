@@ -1,17 +1,15 @@
-package gru21.dtusocial.controller;
+package grp21.dtusocial.data.controller;
 
-import grp21.dtusocial.service.data.dao.MongoTodoDAO;
-import grp21.dtusocial.service.data.PersistenceException;
-import grp21.dtusocial.service.data.dao.TodoDAO;
-import grp21.dtusocial.service.data.dto.Todo;
-import grp21.dtusocial.service.data.ElementNotFoundException;
-import gru21.dtusocial.controller.TodoController;
-import grp21.dtusocial.service.data.ValidException;
+import grp21.dtusocial.data.dao.MongoTodoDAO;
+import grp21.dtusocial.data.PersistenceException;
+import grp21.dtusocial.data.dao.TodoDAO;
+import grp21.dtusocial.data.dto.Todo;
+import grp21.dtusocial.data.ElementNotFoundException;
+import grp21.dtusocial.data.controller.TodoController;
+import grp21.dtusocial.data.ValidException;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

@@ -1,8 +1,8 @@
-package grp21.dtusocial.service.data;
+package grp21.dtusocial.data;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteResult;
-import grp21.dtusocial.service.data.dto.BaseDTO;
+import grp21.dtusocial.data.dto.BaseDTO;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.logging.Level;
