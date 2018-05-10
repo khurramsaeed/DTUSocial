@@ -1,7 +1,6 @@
 package grp21.dtusocial.data.dao;
 
-import grp21.dtusocial.data.dao.MongoBaseDAO;
-import grp21.dtusocial.data.dao.TodoDAO;
+
 import grp21.dtusocial.data.dto.Todo;
 
 /**

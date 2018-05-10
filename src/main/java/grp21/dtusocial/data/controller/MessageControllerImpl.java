@@ -3,7 +3,6 @@ package grp21.dtusocial.data.controller;
 import grp21.dtusocial.data.PersistenceException;
 import grp21.dtusocial.data.dao.MessageDAO;
 import grp21.dtusocial.data.dao.MongoMessageDAO;
-import grp21.dtusocial.data.dao.MongoTodoDAO;
 import grp21.dtusocial.data.dto.Message;
 import java.net.UnknownHostException;
 import java.util.List;

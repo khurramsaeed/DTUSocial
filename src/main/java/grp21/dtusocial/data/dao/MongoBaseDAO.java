@@ -15,6 +15,7 @@ import org.mongodb.morphia.query.UpdateResults;
 /**
  *
  * @author Morten og Khurram
+ * @param <T>
  */
 public class MongoBaseDAO<T extends BaseDTO> implements BaseDAO<T> {
     private final Class<T> type;
@@ -138,7 +139,6 @@ public class MongoBaseDAO<T extends BaseDTO> implements BaseDAO<T> {
             UpdateOperations<Todo> operations = MorphiaHandler.getDS().createUpdateOperations(Todo.class)
                     .set("message", todo.getMessage());
             
-            // TODO: Update done() also for todo
             MorphiaHandler.getDS().update(todoQuery, operations);            
             return true;
         } catch (Exception e){

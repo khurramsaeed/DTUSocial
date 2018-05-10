@@ -1,6 +1,5 @@
 package grp21.dtusocial.data.dto;
 
-import brugerautorisation.data.Bruger;
 import org.mongodb.morphia.annotations.Indexed;
 
 /**

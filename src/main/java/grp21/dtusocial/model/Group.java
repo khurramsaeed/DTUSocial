@@ -6,7 +6,6 @@ public class Group {
     String users[];
 
     public Group(String groupId, String groupName, String[] users) {
-        //this.messages = messages;
         this.groupId = groupId;
         this.groupName = groupName;
         this.users = users;
@@ -14,14 +13,6 @@ public class Group {
     
     public Group(){
     }
-
-    /*public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }*/
 
     public String getGroupId() {
         return groupId;

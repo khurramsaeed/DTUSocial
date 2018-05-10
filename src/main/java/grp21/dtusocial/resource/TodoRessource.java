@@ -140,7 +140,7 @@ public class TodoRessource {
     /**
      * Gets shared todos with a user
      *
-     * @param id
+     * @param sharedId
      * @return
      */
     @GET

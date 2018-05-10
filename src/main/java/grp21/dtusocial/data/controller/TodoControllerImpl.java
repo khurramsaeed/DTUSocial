@@ -5,7 +5,6 @@ import grp21.dtusocial.data.PersistenceException;
 import grp21.dtusocial.data.dao.TodoDAO;
 import grp21.dtusocial.data.dto.Todo;
 import grp21.dtusocial.data.ElementNotFoundException;
-import grp21.dtusocial.data.controller.TodoController;
 import grp21.dtusocial.data.ValidException;
 import java.net.UnknownHostException;
 import java.util.Collection;

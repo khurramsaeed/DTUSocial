@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  *
  * @author 1234
+ * @param <T>
  */
 public interface BaseDAO <T extends BaseDTO> {
     T save(T element) throws PersistenceException, UnknownHostException;

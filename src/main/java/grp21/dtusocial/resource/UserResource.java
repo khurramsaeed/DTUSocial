@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.service.JWTService;
 import grp21.dtusocial.service.UserDataService;
-import grp21.dtusocial.service.UserTodoService;
 import grp21.dtusocial.data.PersistenceException;
 import grp21.dtusocial.data.dto.Todo;
 import grp21.dtusocial.data.controller.TodoController;
@@ -37,7 +36,7 @@ public class UserResource {
     
     /**
      * Find user by id
-     * @param id
+     * @param studyNr
      * @return User
      */
     @GET
@@ -93,7 +92,6 @@ public class UserResource {
         try {
             String userId = JWTService.resolveUser(authHeader);
             Collection<Todo> userTodos = todoController.getAllUserTodos(userId);
-            // Bruger user = userDataService.getUserById(userId);
             return Response.ok(userTodos).build();
 
         } catch (Exception e) {

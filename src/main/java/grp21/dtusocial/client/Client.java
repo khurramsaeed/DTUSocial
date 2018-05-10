@@ -24,7 +24,6 @@ public class Client {
     public static void main(String[] args) {
         client = ClientBuilder.newClient();
         getAllUsers();
-        //getSpecificUser();
         postLoginDetails();
     }
 
