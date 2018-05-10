@@ -33,11 +33,13 @@ public class ChatResource {
     
     /**
      * Returns all the messages from DB
-     * This method is demonstrate Chat messages
+     * This method is for demonstrate Chat messages
+     * Resourse is Secured
      * @return
      * @throws PersistenceException 
      */
     @GET
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public List<Message> getMessages() throws PersistenceException {
         return messageController.getAllMessages();

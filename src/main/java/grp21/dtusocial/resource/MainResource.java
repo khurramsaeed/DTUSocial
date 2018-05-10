@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response;
 /**
  *
  * @author Khurram Saeed Malik
+ * Initial page
  */
 @Path("")
 public class MainResource {

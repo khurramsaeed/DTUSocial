@@ -4,8 +4,7 @@ import com.google.gson.Gson;
 import grp21.dtusocial.model.PATCH;
 import grp21.dtusocial.model.Secured;
 import grp21.dtusocial.data.controller.TodoControllerImpl;
-import grp21.dtusocial.service.UserTodoService;
-import grp21.dtusocial.service.TodoService;
+import grp21.dtusocial.service.Generator;
 import grp21.dtusocial.data.PersistenceException;
 import grp21.dtusocial.data.dto.Todo;
 import grp21.dtusocial.data.ElementNotFoundException;
@@ -32,8 +31,7 @@ public class TodoRessource {
 
     private TodoController todoController = new TodoControllerImpl();
     String success = new Gson().toJson("Success");
-    private UserTodoService userTodoService = UserTodoService.getInstance();
-    private TodoService todoService = TodoService.getInstance();
+    private Generator generator = Generator.getInstance();
 
     /**
      * Returns all todos from backend Only for test purposes
@@ -55,10 +53,11 @@ public class TodoRessource {
      * @throws UnknownHostException
      */
     @PUT
+    @Secured
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addTodo(Todo todo) throws PersistenceException, UnknownHostException {
-        todo.setTodoId("" + userTodoService.getGeneratedId());
+        todo.setTodoId("" + generator.getGeneratedId());
         if (todo.getTodoId().length() == 14) {
             String sharedId = todo.getUserId();
             todo.setUserId("SharedResource");

@@ -53,30 +53,6 @@ public class UserResource {
          return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
     }
     
-    /**
-     * If we want to add new users
-     * @param newUser
-     * @return 
-     */
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public String addUser(User newUser) {
-//        return dataService.addUser(newUser);
-//    }
-    /*@GET DEPRECETAD: JSON is converted with 'jersey-moxy' dependency
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsers() {
-        userDataService.addUser(new User("Jhon Doe", "secure", "johndoe@a.co"));
-        if (userDataService.getUsers().isEmpty()) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
-        String json = new Gson().toJson(userDataService.getUsers());
-        return Response.ok(json).type(MediaType.APPLICATION_JSON).build();
-    }
-    */
-    
-    
      /**
      * Gets user todos by id
      * @param authHeader
